@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Frozen Grave: 2041</title>
     <style>
+        /* === 폰트 로드 === */
+        @font-face { font-family: 'NeoDunggeunmo'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'Arita-buri-SemiBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'SUIT-Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'Chosunilbo_myungjo'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
         :root {
             --bg-color: #050505;
             --accent-red: #bb0000;
@@ -14,61 +22,46 @@
             --paper-color: #e3dac9;
             --ink-color: #2b2b2b;
             --term-green: #33ff33;
+            
+            --term-font: 'Courier New', monospace;
+            --pixel-font: 'NeoDunggeunmo', 'Rajdhani', sans-serif; 
+            --main-sub-font: 'Arita-buri-SemiBold', serif; 
+            --overview-font: 'SUIT-Regular', sans-serif;   
+            --newspaper-font: 'Chosunilbo_myungjo', serif; 
+            --map-eng-font: 'Chakra Petch', sans-serif;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background-color: var(--bg-color);
-            color: #fff;
-            font-family: 'Pretendard', sans-serif;
-            overflow-x: hidden; 
-            scroll-behavior: smooth;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: var(--bg-color); color: #fff; font-family: 'Pretendard', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        section { position: relative; min-height: 100vh; padding: 80px 10%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid #1a1a1a; }
+        h2 { font-size: 2.5rem; color: var(--ice-blue); margin-bottom: 40px; border-left: 5px solid var(--accent-red); padding-left: 20px; text-transform: uppercase; z-index: 2; position: relative; }
 
-        section {
-            position: relative; min-height: 100vh; padding: 80px 10%;
-            box-sizing: border-box; display: flex; flex-direction: column; justify-content: center;
-            border-bottom: 1px solid #222;
-        }
-
-        h2 {
-            font-size: 2.5rem; color: var(--ice-blue); margin-bottom: 40px;
-            border-left: 5px solid var(--accent-red); padding-left: 20px;
-            text-transform: uppercase;
-        }
+        /* 배경 패턴 */
+        #game-intro { background-color: #080808; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; }
+        #world-map { background-color: #050505; background-image: radial-gradient(#1a1a1a 1px, transparent 1px); background-size: 20px 20px; }
+        #factions { background: radial-gradient(circle at center, #111 0%, #000 100%); }
+        #story { background-color: #050505; background: repeating-linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1) 3px, #0a0a0a 3px, #0a0a0a 6px); }
+        #play-link { background: linear-gradient(to top, rgba(165, 243, 252, 0.05) 0%, #000 50%); }
 
         /* 사이드 내비게이션 */
-        .side-nav {
-            position: fixed; top: 50%; left: 30px; transform: translateY(-50%);
-            z-index: 1000; display: flex; flex-direction: column; gap: 20px;
-        }
-        .nav-item {
-            display: flex; align-items: center; gap: 12px;
-            text-decoration: none; cursor: pointer; group;
-        }
-        .nav-bar {
-            width: 3px; height: 15px; background: #444;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .nav-text {
-            font-size: 0.7rem; color: #666; font-weight: bold; text-transform: uppercase;
-            letter-spacing: 2px; opacity: 0; transform: translateX(-10px);
-            transition: all 0.3s ease;
-        }
-        .nav-item.active .nav-bar, .nav-item:hover .nav-bar {
-            background: var(--ice-blue); height: 30px; width: 4px;
-            box-shadow: 0 0 10px var(--ice-blue);
-        }
-        .nav-item.active .nav-text, .nav-item:hover .nav-text {
-            opacity: 1; transform: translateX(0); color: #fff;
-        }
+        .side-nav { position: fixed; top: 50%; left: 30px; transform: translateY(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 20px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; group; }
+        .nav-bar { width: 3px; height: 15px; background: #444; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .nav-text { font-size: 0.7rem; color: #666; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; opacity: 0; transform: translateX(-10px); transition: all 0.3s ease; }
+        .nav-item.active .nav-bar, .nav-item:hover .nav-bar { background: var(--ice-blue); height: 30px; width: 4px; box-shadow: 0 0 10px var(--ice-blue); }
+        .nav-item.active .nav-text, .nav-item:hover .nav-text { opacity: 1; transform: translateX(0); color: #fff; }
 
-        /* 1. 대문 */
-        .intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: #000; z-index: 9999; transition: opacity 1.5s ease; }
-        .intro-text { font-size: 1.5rem; line-height: 2; text-align: center; color: #fff; min-height: 60px; }
-        .cursor { display: inline-block; width: 2px; height: 1.5rem; background-color: #fff; margin-left: 5px; animation: blink 0.5s infinite; vertical-align: middle; }
+        /* 1. 대문 & 인트로 */
+        .intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: #000; z-index: 9999; transition: opacity 1.5s ease; flex-direction: column; }
+        .intro-text { font-size: 1.8rem; line-height: 2; text-align: center; color: #fff; min-height: 60px; font-family: var(--pixel-font); margin-bottom: 50px; }
+        .cursor { display: inline-block; width: 10px; height: 1.5rem; background-color: #fff; margin-left: 5px; animation: blink 0.5s infinite; vertical-align: middle; }
+        
+        /* SKIP 버튼 */
+        .skip-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0a0000; color: var(--accent-red); border: 2px solid var(--accent-red); padding: 10px 30px; font-family: var(--map-eng-font); font-weight: 900; font-size: 1.2rem; letter-spacing: 4px; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(187, 0, 0, 0.4), inset 0 0 10px rgba(187, 0, 0, 0.2); text-shadow: 0 0 8px var(--accent-red); transition: all 0.3s ease; animation: skipPulse 2s infinite; border-radius: 4px; z-index: 10000; }
+        .skip-btn:hover { background: var(--accent-red); color: #000; box-shadow: 0 0 30px var(--accent-red); text-shadow: none; transform: translateX(-50%) scale(1.05); }
+        .skip-btn span { display: block; font-size: 0.6rem; margin-top: 8px; opacity: 0.8; font-weight: normal; letter-spacing: 2px; }
+        @keyframes skipPulse { 0% { box-shadow: 0 0 15px rgba(187, 0, 0, 0.4); } 50% { box-shadow: 0 0 30px rgba(187, 0, 0, 0.7); border-color: #ff3333; color: #ff3333; } 100% { box-shadow: 0 0 15px rgba(187, 0, 0, 0.4); } }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+
         #mainContainer { display: none; opacity: 0; transition: opacity 2s ease; }
         #main { height: 100vh; overflow: hidden; position: relative; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('6526378d-9989-4efc-a595-161c503049d3.jpg') no-repeat center center/cover; }
         #bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: opacity 2s ease; opacity: 1; }
@@ -77,11 +70,10 @@
         #snow-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
         .main-title-box { position: relative; z-index: 10; text-align: center; text-shadow: 0 0 30px rgba(0,0,0,1); }
         .main-title-box h1 { font-size: 4rem; margin: 0; color: #fff; letter-spacing: 5px; }
-        .main-title-box p { font-size: 1.2rem; color: var(--ice-blue); margin-top: 15px; letter-spacing: 2px; }
+        .main-title-box p { font-size: 1.4rem; color: var(--ice-blue); margin-top: 20px; letter-spacing: 1px; font-family: var(--main-sub-font); font-weight: normal; }
 
         /* 2. 소개 */
-        #game-intro { background: #080808; overflow: hidden; }
-        .vital-container { display: flex; height: 600px; width: 100%; gap: 15px; padding: 0 20px; }
+        .vital-container { display: flex; height: 600px; width: 100%; gap: 15px; padding: 0 20px; z-index: 2; }
         .vital-card { flex: 1; position: relative; background: linear-gradient(180deg, rgba(15,15,15,0.9) 0%, rgba(5,5,5,0.95) 100%); border: 1px solid #333; transform: skewX(-10deg); transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .vital-card:hover { flex: 3; background: linear-gradient(180deg, rgba(25,25,25,0.95) 0%, #000 100%); box-shadow: 0 0 30px rgba(255, 255, 255, 0.05); }
         .v-blue:hover { border-color: var(--ice-blue); box-shadow: 0 0 30px rgba(165, 243, 252, 0.2); }
@@ -92,8 +84,8 @@
         .vital-icon { font-size: 3.5rem; margin-bottom: 15px; display: block; text-shadow: 0 0 15px currentColor; }
         .vital-title { font-size: 1.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 5px; font-family: 'Courier New', monospace; }
         .vital-status { font-size: 0.9rem; margin-bottom: 25px; font-weight: bold; letter-spacing: 2px; border: 1px solid; padding: 4px 12px; display: inline-block; }
-        .vital-desc { max-height: 0; overflow: hidden; opacity: 0; transition: all 0.6s ease; font-size: 1rem; color: #bbb; line-height: 1.8; margin-top: 10px; width: 85%; margin-left: auto; margin-right: auto; word-break: keep-all; }
-        .vital-card:hover .vital-desc { max-height: 200px; opacity: 1; margin-top: 30px; }
+        .vital-desc { max-height: 0; overflow: hidden; opacity: 0; transition: all 0.6s ease; font-size: 1rem; color: #ccc; line-height: 1.6; margin-top: 10px; width: 85%; margin-left: auto; margin-right: auto; word-break: keep-all; font-family: var(--overview-font); text-align: center; }
+        .vital-card:hover .vital-desc { max-height: 300px; opacity: 1; margin-top: 30px; }
         .ecg-line { position: absolute; bottom: 80px; left: 0; width: 100%; height: 60px; background-repeat: repeat-x; background-size: 300px 60px; opacity: 0.15; transform: skewX(10deg); animation: ecgLoop 3s linear infinite; pointer-events: none; }
         .vital-card:hover .ecg-line { opacity: 0.6; }
         @keyframes ecgLoop { 0% { background-position: 0 0; } 100% { background-position: -300px 0; } }
@@ -102,19 +94,27 @@
         .v-red .vital-icon { color: var(--accent-red); } .v-red .vital-status { color: var(--accent-red); border-color: var(--accent-red); } .v-red .ecg-line { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60" fill="none" stroke="%23ff0000" stroke-width="2"><path d="M0 30 L30 30 L40 5 L50 55 L60 30 L300 30"/></svg>'); }
 
         /* 3. 지도 */
-        .map-layout { display: flex; gap: 30px; height: 600px; border: 1px solid #333; padding: 10px; background: #0a0a0a; }
-        .map-area { flex: 7; background: #111; position: relative; overflow: hidden; background-image: linear-gradient(rgba(50, 50, 50, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 50, 50, 0.2) 1px, transparent 1px); background-size: 40px 40px; box-shadow: inset 0 0 50px #000; }
+        .map-layout { display: flex; gap: 30px; height: 600px; border: 1px solid #333; padding: 10px; background: #0a0a0a; z-index: 2; }
+        .map-scroll-wrapper { flex: 7; position: relative; overflow: auto; box-shadow: inset 0 0 50px #000; cursor: grab; background: #000; }
+        .map-scroll-wrapper:active { cursor: grabbing; }
+        .map-content { min-width: 1200px; height: 100%; position: relative; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), linear-gradient(rgba(50, 255, 50, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 255, 50, 0.1) 1px, transparent 1px), url('Gemini_Generated_Image_oggcx1oggcx1oggc.jpg') no-repeat center center/cover; background-size: cover, 60px 60px, 60px 60px, cover; background-blend-mode: normal, overlay, overlay, normal; }
+        .map-scroll-wrapper::-webkit-scrollbar { height: 8px; background: #111; }
+        .map-scroll-wrapper::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        .map-scroll-wrapper::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
         .map-scanline { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: rgba(165, 243, 252, 0.3); box-shadow: 0 0 10px var(--ice-blue); animation: scan 3s linear infinite; pointer-events: none; }
         @keyframes scan { 0% { top: 0%; opacity: 0; } 100% { top: 100%; opacity: 0; } }
-        .map-pin { position: absolute; width: 14px; height: 14px; background: var(--accent-red); border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px var(--accent-red); border: 2px solid #fff; transition: transform 0.2s; }
+        .map-pin { position: absolute; width: 14px; height: 14px; background: var(--accent-red); border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px var(--accent-red); border: 2px solid #fff; transition: transform 0.2s; z-index: 10; }
         .map-pin:hover { transform: scale(1.5); background: #fff; }
-        .map-interface { flex: 3; background: rgba(20,20,20,0.8); border-left: 1px solid #333; padding: 30px; display: flex; flex-direction: column; font-family: monospace; }
-        .map-img-box { width: 100%; height: 150px; background: #111; border: 1px dashed #444; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; color: #555; font-size: 0.8rem; }
-        .map-reset-btn { background: transparent; border: 1px solid #444; color: #666; padding: 5px 10px; margin-top: 20px; cursor: pointer; font-family: monospace; font-size: 0.8rem; transition: all 0.3s; }
+        .map-interface { flex: 3; background: rgba(20,20,20,0.8); border-left: 1px solid #333; padding: 30px; display: flex; flex-direction: column; font-family: var(--map-eng-font); letter-spacing: 1px; min-width: 300px; }
+        .map-interface p, .map-interface .map-reset-btn { font-family: var(--pixel-font); }
+        .map-img-box { width: 100%; height: 180px; background-color: #000; border: 1px solid #444; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; color: #555; font-size: 0.8rem; box-sizing: border-box; position: relative; overflow: hidden; }
+        .cmd-blink { animation: cmdPulse 1.5s infinite; color: #666; font-family: var(--map-eng-font); }
+        @keyframes cmdPulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .map-reset-btn { background: transparent; border: 1px solid #444; color: #666; padding: 5px 10px; margin-top: 20px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; font-family: var(--pixel-font); }
         .map-reset-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
 
-        /* 4. 인물 - 수정됨 */
-        .faction-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; transition: all 0.5s ease; margin-bottom: 30px; }
+        /* 4. 인물 */
+        .faction-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; transition: all 0.5s ease; margin-bottom: 30px; z-index: 2; position: relative; }
         .faction-grid.minimized { transform: scale(0.95); opacity: 0.4; }
         .faction-card { background: #111; border: 1px solid #333; height: 400px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 10px); }
         .faction-card:hover { border-color: var(--ice-blue); box-shadow: 0 0 25px rgba(165,243,252,0.15); transform: translateY(-5px); }
@@ -124,75 +124,54 @@
         .faction-overlay { background: linear-gradient(to top, rgba(0,0,0,1), transparent); padding: 25px; width: 100%; box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.1); }
         .faction-name { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
         .faction-desc { font-size: 0.9rem; color: #aaa; line-height: 1.5; height: 60px; overflow: hidden; }
-        .char-list-wrapper { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); background: #0a0a0a; border-top: 1px solid #333; border-bottom: 1px solid #333; background-image: linear-gradient(rgba(50, 255, 50, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 255, 50, 0.03) 1px, transparent 1px); background-size: 50px 50px; position: relative; }
+        .char-list-wrapper { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); background: #0a0a0a; border-top: 1px solid #333; border-bottom: 1px solid #333; background-image: linear-gradient(rgba(50, 255, 50, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 255, 50, 0.03) 1px, transparent 1px); background-size: 50px 50px; position: relative; z-index: 2; }
         .char-list-wrapper::after { content: "PERSONNEL DATABASE // ACCESS GRANTED"; position: absolute; bottom: 10px; right: 20px; font-size: 3rem; color: rgba(255,255,255,0.03); font-weight: 900; pointer-events: none; }
         .char-list-wrapper.open { height: 300px; opacity: 1; padding: 30px 0; margin-bottom: 20px; }
         .char-list-scroll { display: flex; gap: 25px; overflow-x: auto; padding: 10px 40px; scrollbar-width: thin; scrollbar-color: var(--accent-red) #111; align-items: center; height: 100%; }
         
-        /* small-char-card 수정 (아날로그 감성) */
         .small-char-card { min-width: 160px; height: 240px; background: #111; border: 1px solid #333; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s; flex-shrink: 0; position: relative; border-top: 3px solid #555; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.8); }
         .small-char-card:hover { border-color: #888; border-top-color: var(--ice-blue); transform: translateY(-3px); }
         .small-char-card.selected { border: 1px solid var(--ice-blue); box-shadow: 0 0 15px rgba(165,243,252,0.1); border-top: 3px solid var(--ice-blue); }
-        
-        /* small-char-img-area 수정 (글리치 + 다크 + 스캔라인) */
-        .small-char-img-area { 
-            flex: 1; background: #050505; margin: 8px; border: 1px solid #222; display: flex; justify-content: center; align-items: center; color: #444; font-size: 0.8rem; overflow: hidden; position: relative; 
-            filter: brightness(0.8) contrast(1.1) sepia(0.2); /* 어둡고 낡은 느낌 */
-            transition: filter 0.3s;
-        }
+        .small-char-img-area { flex: 1; background: #050505; margin: 8px; border: 1px solid #222; display: flex; justify-content: center; align-items: center; color: #444; font-size: 0.8rem; overflow: hidden; position: relative; filter: brightness(0.8) contrast(1.1) sepia(0.2); transition: filter 0.3s; }
         .small-char-card:hover .small-char-img-area { filter: brightness(1.0) contrast(1.0) sepia(0); }
-        
-        /* 스캔라인 효과 */
-        .small-char-img-area::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
-            background-size: 100% 4px; z-index: 2; pointer-events: none; opacity: 0.6;
-        }
-
-        /* 좌우 치지직 글리치 효과 */
+        .small-char-img-area::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2)); background-size: 100% 4px; z-index: 2; pointer-events: none; opacity: 0.6; }
         .small-char-img-area::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 3; pointer-events: none; opacity: 0; }
         .small-char-card:hover .small-char-img-area::after { animation: glitch-anim-horiz 2.5s infinite; opacity: 1; background: rgba(165, 243, 252, 0.05); }
-
-        @keyframes glitch-anim-horiz {
-            0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); }
-            5% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
-            10% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 0); }
-            15% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
-            20% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0); }
-            25% { clip-path: inset(0% 0 100% 0); transform: translate(0, 0); } /* 잠시 멈춤 */
-            100% { clip-path: inset(0% 0 100% 0); transform: translate(0, 0); }
-        }
-        
+        @keyframes glitch-anim-horiz { 0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); } 5% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); } 10% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 0); } 15% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); } 20% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0); } 25% { clip-path: inset(0% 0 100% 0); transform: translate(0, 0); } 100% { clip-path: inset(0% 0 100% 0); transform: translate(0, 0); } }
         .small-char-name { background: #1a1a1a; width: 100%; padding: 10px; box-sizing: border-box; font-size: 0.85rem; font-weight: bold; text-align: center; color: #bbb; border-top: 1px solid #333; letter-spacing: 1px; }
         .small-char-card.deceased { filter: grayscale(1) brightness(0.5); border-top-color: #333; }
         .small-char-card.deceased .small-char-name { text-decoration: line-through; color: #444; }
         
-        /* char-detail-view 수정 (롤백 + 비율 조정) */
-        .char-detail-view { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s ease; display: flex; gap: 40px; background: rgba(10,15,20,0.95); border: 1px solid #333; align-items: stretch; }
-        .char-detail-view.open { height: 400px; opacity: 1; padding: 30px; border-color: var(--ice-blue); }
-        
-        /* detail-img-box 수정 (적당한 크기로 롤백 + 꾸미기) */
-        .detail-img-box { 
-            flex: 0 0 35%; /* 너비를 35%로 고정 (나머지 65%는 텍스트) */
-            background: #000; border: 1px solid #444; display: flex; justify-content: center; align-items: center; color: #444; position: relative; 
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8); 
-        }
-        .detail-img-box::before, .detail-img-box::after { content: ''; position: absolute; width: 20px; height: 20px; border-color: var(--ice-blue); border-style: solid; z-index: 2; }
-        .detail-img-box::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
-        .detail-img-box::after { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
-        
-        /* detail-info-box 수정 */
-        .detail-info-box { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .detail-name { font-size: 2.5rem; color: #fff; margin: 0 0 10px 0; border-bottom: 2px solid var(--accent-red); padding-bottom: 10px; display: inline-block; font-family: 'Courier New', monospace; }
-        .detail-role { color: var(--ice-blue); font-size: 1.2rem; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; }
-        .detail-desc { font-size: 1rem; color: #ccc; line-height: 1.8; white-space: pre-line; }
-        .detail-stat { margin-top: 20px; display: flex; gap: 20px; }
-        .stat-badge { background: #222; padding: 5px 15px; border-radius: 4px; border: 1px solid #444; font-size: 0.8rem; color: #888; }
-        .stat-badge.dead { border-color: var(--accent-red); color: var(--accent-red); background: #220000; }
+        .char-detail-view { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s ease; display: flex; gap: 30px; background: rgba(8, 12, 15, 0.98); border: 1px solid #333; align-items: stretch; font-family: var(--term-font); z-index: 2; }
+        .char-detail-view.open { height: 450px; opacity: 1; padding: 30px; border-color: var(--ice-blue); box-shadow: inset 0 0 50px rgba(165, 243, 252, 0.05); }
+        .char-detail-view.corrupted-mode { border-color: #550000; box-shadow: inset 0 0 30px rgba(80, 0, 0, 0.2); }
+        .corrupted-text { color: #880000 !important; text-shadow: 1px 0 #333; }
+        .detail-img-box { flex: 0 0 45%; background: #000; border: 1px solid #444; display: flex; justify-content: center; align-items: center; color: #444; position: relative; box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.9); aspect-ratio: 4 / 3; overflow: hidden; }
+        .detail-img-box.corrupted-img { background: repeating-radial-gradient(#000 0, #000 2px, #111 3px), repeating-linear-gradient(0deg, transparent, transparent 2px, #000 4px); border-color: #550000; }
+        .detail-img-box.corrupted-img::before { content: 'SIGNAL LOST'; color: #880000; font-weight: bold; font-size: 1.5rem; letter-spacing: 5px; opacity: 0.8; border: none; }
+        .detail-img-box:not(.corrupted-img)::before, .detail-img-box:not(.corrupted-img)::after { content: ''; position: absolute; width: 30px; height: 30px; border-color: var(--ice-blue); border-style: solid; z-index: 2; opacity: 0.7; }
+        .detail-img-box:not(.corrupted-img)::before { top: 0; left: 0; border-width: 3px 0 0 3px; }
+        .detail-img-box:not(.corrupted-img)::after { bottom: 0; right: 0; border-width: 0 3px 3px 0; }
+        .detail-info-box { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 10px; position: relative; }
+        .detail-header-deco { color: #444; font-size: 0.8rem; margin-bottom: 15px; letter-spacing: 2px; }
+        .detail-name { font-size: 2.2rem; color: #fff; margin: 0 0 5px 0; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        .detail-role { color: var(--ice-blue); font-size: 1.1rem; margin-bottom: 25px; font-weight: bold; letter-spacing: 1px; display: flex; align-items: center; }
+        .detail-role::before { content: '[ ROLE: '; color: #555; }
+        .detail-role::after { content: ' ]'; color: #555; }
+        .db-data-field { display: flex; margin-bottom: 12px; align-items: baseline; border-bottom: 1px dashed #222; padding-bottom: 5px; }
+        .db-label { color: var(--ice-blue); font-weight: bold; margin-right: 15px; min-width: 100px; letter-spacing: 1px; font-size: 0.9rem; }
+        .db-value { color: #ccc; font-size: 1rem; letter-spacing: 0.5px; }
+        .detail-desc-box { margin-top: 20px; border-top: 2px solid #333; padding-top: 15px; flex: 1; overflow-y: auto; }
+        .detail-desc-label { color: #555; font-size: 0.9rem; margin-bottom: 10px; display: block; }
+        .detail-desc { font-size: 0.95rem; color: #bbb; line-height: 1.6; white-space: pre-line; font-family: var(--term-font); }
+        .typing-cursor { display: inline-block; width: 8px; height: 15px; background: var(--ice-blue); margin-left: 5px; animation: blink 1s step-end infinite; }
+        .detail-stat { margin-top: auto; display: flex; gap: 20px; padding-top: 20px; border-top: 1px solid #333; }
+        .stat-badge { background: #1a1a1a; padding: 8px 15px; font-family: var(--term-font); font-size: 0.85rem; color: var(--ice-blue); border: 1px solid var(--ice-blue); letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 0 10px rgba(165, 243, 252, 0.1); }
+        .stat-badge.dead { border-color: var(--accent-red); color: var(--accent-red); background: #2a0a0a; box-shadow: 0 0 10px rgba(187, 0, 0, 0.2); }
 
         /* 5. 정보 */
-        .info-container { display: flex; gap: 40px; height: 700px; }
-        .newspaper-panel { flex: 1; background: var(--paper-color); color: var(--ink-color); padding: 40px; box-shadow: 10px 10px 30px rgba(0,0,0,0.7); display: flex; flex-direction: column; transform: rotate(-1.5deg); transition: transform 0.3s; position: relative; font-family: 'Times New Roman', 'Batang', serif; }
+        .info-container { display: flex; gap: 40px; height: 700px; z-index: 2; }
+        .newspaper-panel { flex: 1; background: var(--paper-color); color: var(--ink-color); padding: 40px; box-shadow: 10px 10px 30px rgba(0,0,0,0.7); display: flex; flex-direction: column; transform: rotate(-1.5deg); transition: transform 0.3s; position: relative; font-family: var(--newspaper-font); }
         .newspaper-panel:hover { transform: rotate(0deg); }
         .news-header { border-bottom: 4px double #2b2b2b; margin-bottom: 25px; padding-bottom: 15px; text-align: center; }
         .news-title { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; display: block; margin-bottom: 5px; }
@@ -226,7 +205,7 @@
 
         /* 6. 플레이 링크 */
         #play-link { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
-        .play-container { display: flex; justify-content: center; gap: 40px; width: 100%; }
+        .play-container { display: flex; justify-content: center; gap: 40px; width: 100%; z-index: 2; }
         .play-card { width: 350px; height: 450px; background: #111; border-radius: 30px; border: 2px solid #333; text-decoration: none; display: flex; flex-direction: column; justify-content: flex-end; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .play-card:hover { transform: translateY(-10px) scale(1.02); border-color: var(--ice-blue); box-shadow: 0 0 40px rgba(165, 243, 252, 0.2); }
         #card-original { background: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('5098be83-77cd-485a-b13d-1646b9726999.jpg') no-repeat center center/cover; }
@@ -243,6 +222,94 @@
         .credit-box { color: #666; font-size: 0.9rem; line-height: 2; letter-spacing: 1px; }
         .credit-box span { color: #fff; font-weight: bold; }
 
+        /* [모바일 전용 내비게이션 화살표 (숨김 기본)] */
+        .mobile-fac-nav { display: none; position: absolute; top: 50%; width: 100%; justify-content: space-between; padding: 0 10px; box-sizing: border-box; z-index: 20; transform: translateY(-50%); pointer-events: none; }
+        .mobile-nav-btn { pointer-events: auto; background: rgba(0,0,0,0.7); border: 1px solid #444; color: var(--ice-blue); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; border-radius: 50%; backdrop-filter: blur(2px); }
+
+        /* ==========================================================================
+           [MOBILE RESPONSIVE STYLE] - PC 버전은 건드리지 않음
+           ========================================================================== */
+        @media screen and (max-width: 768px) {
+            /* 기본 레이아웃 조정 */
+            .side-nav { display: none; } /* 사이드 내비 숨김 */
+            section { padding: 60px 20px; min-height: auto; }
+            h2 { font-size: 1.8rem; border-left-width: 3px; padding-left: 15px; margin-bottom: 30px; }
+            .main-title-box h1 { font-size: 2.2rem; }
+            .main-title-box p { font-size: 0.9rem; }
+
+            /* 1. Intro (Metrics) - 세로 나열 */
+            .vital-container { flex-direction: column; height: auto; gap: 20px; }
+            .vital-card { transform: none; width: 100%; height: auto; min-height: 180px; flex: none !important; } /* Skew 제거, 높이 자동 */
+            .vital-content { transform: none; padding: 15px; }
+            .vital-desc { max-height: 200px; opacity: 1; margin-top: 15px; font-size: 0.85rem; } /* 설명 항상 보이기 */
+            .vital-icon { font-size: 2.5rem; margin-bottom: 10px; }
+            .vital-title { font-size: 1.4rem; }
+            .ecg-line { transform: none; bottom: 10px; opacity: 0.3; }
+
+            /* 2. Map - 지도 위, 인터페이스 아래 */
+            .map-layout { flex-direction: column; height: auto; gap: 0; border: none; padding: 0; background: transparent; }
+            .map-scroll-wrapper { width: 100%; height: 350px; border: 1px solid #333; order: 1; } /* 지도 높이 고정 */
+            .map-interface { width: 100%; border-left: none; border: 1px solid #333; border-top: none; padding: 20px; box-sizing: border-box; order: 2; min-width: 0; }
+            .map-pin { width: 12px; height: 12px; } /* 핀 크기 살짝 조정 */
+
+            /* 3. Factions - 캐러셀(Carousel) 형태 */
+            .faction-grid { 
+                display: flex; 
+                flex-direction: row; 
+                height: 420px; 
+                overflow: hidden; 
+                position: relative; 
+                gap: 0; 
+                justify-content: center;
+                align-items: center;
+            }
+            .faction-grid.minimized { transform: none; opacity: 1; } /* PC용 효과 제거 */
+            .faction-card { 
+                position: absolute; 
+                width: 70%; 
+                height: 380px; 
+                transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                opacity: 0;
+                transform: scale(0.8) translateX(0);
+                z-index: 1;
+                pointer-events: none; /* 비활성 카드 클릭 방지 */
+            }
+            /* 활성화된 카드 (중앙) */
+            .faction-card.mobile-active {
+                opacity: 1;
+                transform: scale(1) translateX(0);
+                z-index: 10;
+                pointer-events: auto;
+                box-shadow: 0 0 20px rgba(165, 243, 252, 0.2);
+                border-color: var(--ice-blue);
+            }
+            /* 이전/다음 카드 (양옆 흐릿하게) */
+            .faction-card.mobile-prev { opacity: 0.3; transform: scale(0.8) translateX(-105%); z-index: 5; filter: blur(2px); }
+            .faction-card.mobile-next { opacity: 0.3; transform: scale(0.8) translateX(105%); z-index: 5; filter: blur(2px); }
+            
+            .mobile-fac-nav { display: flex; } /* 화살표 보이기 */
+
+            /* 인물 리스트 및 상세창 세로 배치 */
+            .char-list-wrapper.open { height: auto; padding: 20px 0; }
+            .char-list-scroll { padding: 5px 20px; }
+            .small-char-card { min-width: 120px; height: 180px; }
+            
+            .char-detail-view { flex-direction: column; height: auto !important; max-height: none; padding: 20px; gap: 20px; }
+            .detail-img-box { flex: none; height: 250px; width: 100%; aspect-ratio: auto; }
+            .detail-info-box { padding-top: 0; }
+            .detail-name { font-size: 1.8rem; }
+
+            /* 4. Story - 신문 위, 터미널 아래 */
+            .info-container { flex-direction: column; height: auto; gap: 30px; }
+            .newspaper-panel { transform: none; width: 100%; box-sizing: border-box; min-height: 500px; }
+            .newspaper-panel:hover { transform: none; }
+            .db-terminal { width: 100%; box-sizing: border-box; min-height: 400px; }
+
+            /* 5. Play - 리메이크 위, 오리지널 아래 */
+            .play-container { flex-direction: column; align-items: center; gap: 30px; }
+            .play-card { width: 100%; max-width: 320px; height: 400px; }
+            .play-card:hover { transform: translateY(-5px); }
+        }
     </style>
 </head>
 <body>
@@ -250,6 +317,9 @@
     <div class="intro-screen" id="intro">
         <div class="intro-text">
             <span id="typing-text"></span><span class="cursor"></span>
+        </div>
+        <div class="skip-btn" onclick="finishIntro(true)">
+            SKIP<br><span>>> ENTER >></span>
         </div>
     </div>
 
@@ -269,7 +339,7 @@
             <canvas id="snow-canvas"></canvas>
             <div class="main-title-box">
                 <h1>THE FROZEN GRAVE</h1>
-                <p>2041 SEOUL WINTER APOCALYPSE</p>
+                <p>끝나지 않는 겨울과 괴물 그리고, 사람들의 이야기</p>
             </div>
         </section>
 
@@ -282,7 +352,7 @@
                         <span class="vital-icon">❄️</span>
                         <div class="vital-title">HYPOTHERMIA</div>
                         <div class="vital-status">CRITICAL LEVEL</div>
-                        <div class="vital-desc">영하 50도. 극한의 혹한 환경.<br>체온 저하는 곧 사망으로 직결됨.<br>보온 장비 확보 및 체온 유지 필수.</div>
+                        <div class="vital-desc">얼어붙은 도시와 잿빛 하늘 아래, 무거운 침묵이 내려앉았다.<br>멀리서 들려오는 괴물들의 기괴한 울음소리가 간간이 고요를 깨뜨린다.<br>방공호 밖, 당신은 그저 새하얀 눈밭 위에 내던져진 작은 불씨일 뿐이다.</div>
                     </div>
                 </div>
                 <div class="vital-card v-yellow">
@@ -291,7 +361,7 @@
                         <span class="vital-icon">⚠️</span>
                         <div class="vital-title">THREAT LEVEL</div>
                         <div class="vital-status" style="color:#ffcc00; border-color:#ffcc00;">EXTREME DANGER</div>
-                        <div class="vital-desc">미확인 적대적 감염체 다수 식별.<br>높은 공격성 및 전염성 보유.<br>조우 시 즉각 사살 또는 회피 요망.</div>
+                        <div class="vital-desc">안개 속에서 희미한 그림자가 일렁인다.<br>놈들은 추위도 고통도 잊은 채, 오직 산 자의 온기만을 쫓아 배회하고 있다.<br>마주치는 순간 선택해야 한다. 도망치거나, 혹은 사냥당하거나.</div>
                     </div>
                 </div>
                 <div class="vital-card v-red">
@@ -300,7 +370,7 @@
                         <span class="vital-icon">⚖️</span>
                         <div class="vital-title">INSANITY</div>
                         <div class="vital-status">UNSTABLE</div>
-                        <div class="vital-desc">생존자 간 신뢰도 하락.<br>약탈 및 배신 행위 빈번 발생.<br>선택에 따른 생존 확률 변동 주의.</div>
+                        <div class="vital-desc">극한의 상황은 인간을 가장 밑바닥까지 끌어내린다.<br>어제의 동료가 오늘의 약탈자가 되는 불신과 배신의 시대.<br>이곳에서 가장 경계해야 할 것은 추위가 아니라, 타인의 눈빛 속에 감춰진 광기다.</div>
                     </div>
                 </div>
             </div>
@@ -309,20 +379,25 @@
         <section id="world-map">
             <h2>Operations Map</h2>
             <div class="map-layout">
-                <div class="map-area">
-                    <div class="map-scanline"></div>
-                    <div class="map-pin" style="top: 30%; left: 40%;" onclick="updateMapInfo('A')"></div>
-                    <div class="map-pin" style="top: 60%; left: 70%;" onclick="updateMapInfo('B')"></div>
-                    <div class="map-pin" style="top: 50%; left: 20%;" onclick="updateMapInfo('C')"></div>
-                    <div class="map-pin" style="top: 20%; left: 60%;" onclick="updateMapInfo('D')"></div>
-                    <div class="map-pin" style="top: 75%; left: 35%;" onclick="updateMapInfo('E')"></div>
-                    <div class="map-pin" style="top: 40%; left: 80%;" onclick="updateMapInfo('F')"></div>
-                    <div style="position:absolute; bottom:20px; right:20px; color:#555; font-size:0.8rem;">SATELLITE LINK: OFFLINE</div>
+                <div class="map-scroll-wrapper" id="mapScroll">
+                    <div class="map-content">
+                        <div class="map-scanline"></div>
+                        <div class="map-pin" style="top: 32%; left: 52%;" onclick="updateMapInfo('A')"></div> 
+                        <div class="map-pin" style="top: 55%; left: 50%;" onclick="updateMapInfo('B')"></div> 
+                        <div class="map-pin" style="top: 15%; left: 48%;" onclick="updateMapInfo('C')"></div> 
+                        <div class="map-pin" style="top: 33%; left: 45%;" onclick="updateMapInfo('D')"></div> 
+                        <div class="map-pin" style="top: 50%; left: 25%;" onclick="updateMapInfo('E')"></div> 
+                        <div class="map-pin" style="top: 64%; left: 68%;" onclick="updateMapInfo('F')"></div> 
+                        <div style="position:absolute; bottom:20px; right:20px; color:#999; font-size:0.8rem; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; font-weight:bold;">SATELLITE LINK: OFFLINE</div>
+                    </div>
                 </div>
                 <div class="map-interface">
                     <h3 style="color:var(--ice-blue); border-bottom:1px solid #444; padding-bottom:10px; margin-top:0;">SECTOR DATA</h3>
                     <div id="infoContent" style="margin-top:auto; margin-bottom:auto; text-align:center; color:#666;">
-                        > WAITING FOR SIGNAL...<br>> SELECT SECTOR PIN
+                        <div class="cmd-blink">
+                            > WAITING FOR SIGNAL...<br>
+                            > SELECT SECTOR PIN
+                        </div>
                     </div>
                 </div>
             </div>
@@ -331,18 +406,38 @@
         <section id="factions">
             <h2>Factions & Survivors Archive</h2>
             <div class="faction-grid" id="factionGrid">
+                <div class="mobile-fac-nav">
+                    <div class="mobile-nav-btn" onclick="moveMobileFaction(-1)">&#10094;</div>
+                    <div class="mobile-nav-btn" onclick="moveMobileFaction(1)">&#10095;</div>
+                </div>
+
                 <div class="faction-card" id="fac-bunker" onclick="loadFaction('bunker')"><div class="faction-overlay"><div class="faction-name">The Bunker</div><div class="faction-desc">작은 지하 방공호.<br>깊은 곳에 묻힌 위태로운 희망.</div></div></div>
                 <div class="faction-card" id="fac-union" onclick="loadFaction('union')"><div class="faction-overlay"><div class="faction-name">Hoehyeon Union</div><div class="faction-desc">회현역을 지배하는 네임드 중형 세력.<br>철저한 신분 등급제 운영.</div></div></div>
                 <div class="faction-card" id="fac-mrc" onclick="loadFaction('mrc')"><div class="faction-overlay"><div class="faction-name">MRC Corp.</div><div class="faction-desc">전 정부 소속 연구진과 군인들의 대형 세력.<br>괴물 통제 연구 및 한국 재건 목표.</div></div></div>
                 <div class="faction-card" id="fac-none" onclick="loadFaction('none')"><div class="faction-overlay"><div class="faction-name">Unaffiliated</div><div class="faction-desc">소속 없이 얼어붙은 황무지를 떠도는<br>생존자들.</div></div></div>
             </div>
             <div class="char-list-wrapper" id="charListWrapper"><div class="char-list-scroll" id="charListContent"></div></div>
+            
             <div class="char-detail-view" id="charDetailView">
                 <div class="detail-img-box" id="detailImg">IMG AREA</div>
                 <div class="detail-info-box">
+                    <div class="detail-header-deco">>> PERSONNEL FILE LOADED // CONFIDENTIAL</div>
                     <div id="detailName" class="detail-name">NAME</div>
                     <div id="detailRole" class="detail-role">ROLE</div>
-                    <div id="detailDesc" class="detail-desc">DESCRIPTION</div>
+                    
+                    <div id="detailAge" class="db-data-field">
+                        <span class="db-label">AGE:</span>
+                        <span class="db-value">-</span>
+                    </div>
+                    <div id="detailSex" class="db-data-field">
+                        <span class="db-label">SEX:</span>
+                        <span class="db-value">-</span>
+                    </div>
+
+                    <div class="detail-desc-box">
+                        <span class="detail-desc-label">// BIOMETRIC DATA & NOTES</span>
+                        <div class="detail-desc"><span id="detailDescText">DESCRIPTION</span><span class="typing-cursor"></span></div>
+                    </div>
                     <div class="detail-stat" id="detailStatArea"><span class="stat-badge">STATUS: ALIVE</span></div>
                 </div>
             </div>
@@ -388,7 +483,7 @@
             <div class="credit-box">
                 Original Creator : <span>Custer</span> &nbsp;/&nbsp; Producer : <span>Elysium</span><br>
                 <br>
-                &copy; 2025 The Frozen Grave Project. All rights reserved.
+                &copy; 2026 The Frozen Grave Project. All rights reserved.
             </div>
         </section>
     </div>
@@ -420,40 +515,130 @@
         function splitHangul(char) { const code = char.charCodeAt(0) - 44032; if (code < 0 || code > 11171) return null; const cho = Math.floor(code / 588); const jung = Math.floor((code % 588) / 28); const jong = code % 28; return { cho, jung, jong }; }
         function combineHangul(cho, jung, jong) { return String.fromCharCode(44032 + (cho * 588) + (jung * 28) + jong); }
         function generateTypingFrames(text) { let frames = []; let currentStr = ""; for (let i = 0; i < text.length; i++) { const char = text[i]; const parts = splitHangul(char); if (parts) { frames.push(currentStr + CHO[parts.cho]); frames.push(currentStr + combineHangul(parts.cho, parts.jung, 0)); if (parts.jong > 0) frames.push(currentStr + char); } else { frames.push(currentStr + char); } currentStr += char; } return frames; }
+        
         const typeElement = document.getElementById('typing-text');
-        function runTypingSequence() { const frames1 = generateTypingFrames(line1); const frames2 = generateTypingFrames(line2); let idx = 0; function typeLine1() { if(idx < frames1.length) { typeElement.innerText = frames1[idx]; idx++; setTimeout(typeLine1, Math.random() * 50 + typeSpeed); } else { setTimeout(() => { typeElement.innerHTML += "<br>"; idx = 0; typeLine2(); }, 1000); } } function typeLine2() { if(idx < frames2.length) { typeElement.innerHTML = line1 + "<br>" + frames2[idx]; idx++; setTimeout(typeLine2, Math.random() * 50 + typeSpeed); } else { setTimeout(finishIntro, 2000); } } typeLine1(); }
-        function finishIntro() { const intro = document.getElementById('intro'); const main = document.getElementById('mainContainer'); intro.style.opacity = '0'; main.style.display = 'block'; setTimeout(() => { main.style.opacity = '1'; intro.style.display = 'none'; document.body.style.overflowY = 'auto'; document.body.style.overflowX = 'hidden'; startSnowEffect(); const video = document.getElementById('bg-video'); if(video) video.play(); renderNewsPage(0); }, 500); }
-        window.onload = function() { setTimeout(runTypingSequence, 500); const video = document.getElementById('bg-video'); if(video) video.addEventListener('ended', () => { video.classList.add('hidden'); }); };
+        let typingTimeouts = [];
+
+        function runTypingSequence() { 
+            const frames1 = generateTypingFrames(line1); 
+            const frames2 = generateTypingFrames(line2); 
+            let idx = 0; 
+            function typeLine1() { if(idx < frames1.length) { typeElement.innerText = frames1[idx]; idx++; typingTimeouts.push(setTimeout(typeLine1, Math.random() * 50 + typeSpeed)); } else { typingTimeouts.push(setTimeout(() => { typeElement.innerHTML += "<br>"; idx = 0; typeLine2(); }, 1000)); } } 
+            function typeLine2() { if(idx < frames2.length) { typeElement.innerHTML = line1 + "<br>" + frames2[idx]; idx++; typingTimeouts.push(setTimeout(typeLine2, Math.random() * 50 + typeSpeed)); } else { typingTimeouts.push(setTimeout(() => { finishIntro(false); }, 2000)); } } 
+            typeLine1(); 
+        }
+        
+        function finishIntro(skip) { 
+            if(skip) { typingTimeouts.forEach(clearTimeout); }
+            const intro = document.getElementById('intro'); 
+            const main = document.getElementById('mainContainer'); 
+            intro.style.opacity = '0'; 
+            main.style.display = 'block'; 
+            setTimeout(() => { 
+                main.style.opacity = '1'; 
+                setTimeout(() => { intro.style.display = 'none'; }, 1500);
+                document.body.style.overflowY = 'auto'; 
+                document.body.style.overflowX = 'hidden'; 
+                startSnowEffect(); 
+                const video = document.getElementById('bg-video'); 
+                if(video) video.play(); 
+                renderNewsPage(0);
+                // 모바일 초기화
+                updateMobileFactionView();
+                // 지도 중앙 정렬
+                const slider = document.getElementById('mapScroll');
+                const content = document.querySelector('.map-content');
+                if (slider && content) { const centerPos = (content.offsetWidth - slider.offsetWidth) / 2; slider.scrollLeft = centerPos; }
+            }, 500); 
+        }
+
+        window.onload = function() { 
+            setTimeout(runTypingSequence, 500); 
+            const video = document.getElementById('bg-video'); 
+            if(video) video.addEventListener('ended', () => { video.classList.add('hidden'); }); 
+            const slider = document.getElementById('mapScroll');
+            let isDown = false, startX, scrollLeft;
+            slider.addEventListener('mousedown', (e) => { isDown = true; slider.classList.add('active'); startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+            slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active'); });
+            slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active'); });
+            slider.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
+        };
+        
         function startSnowEffect() { const c = document.getElementById('snow-canvas'); const ctx = c.getContext('2d'); const main = document.getElementById('main'); let w = main.clientWidth, h = main.clientHeight; c.width=w; c.height=h; const p = Array.from({length:150},()=>({x:Math.random()*w, y:Math.random()*h, r:Math.random()*2+1, v:Math.random()*1.5+0.5})); function draw(){ ctx.clearRect(0,0,w,h); ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.beginPath(); p.forEach(i=>{ ctx.moveTo(i.x,i.y); ctx.arc(i.x,i.y,i.r,0,Math.PI*2); i.x+=i.v; i.y+=i.v*0.8; if(i.x>w)i.x=-10; if(i.y>h)i.y=-10; }); ctx.fill(); requestAnimationFrame(draw); } draw(); window.addEventListener('resize', ()=>{ w=main.clientWidth; h=main.clientHeight; c.width=w; c.height=h; }); }
          
-        const mapData = { 'A': { title: 'SEOUL RUINS', temp: '-45℃', risk: 'EXTREME', desc: '무너진 고층 빌딩 숲.' }, 'B': { title: 'MRC OUTPOST #3', temp: '-5℃', risk: 'SAFE', desc: '지열 발전기 가동 중.' }, 'C': { title: 'FROZEN RIVER', temp: '-30℃', risk: 'HIGH', desc: '얼어붙은 강.' }, 'D': { title: 'ABANDONED HOSPITAL', temp: '-20℃', risk: 'MEDIUM', desc: '의약품이 남아있을 가능성 있음.' }, 'E': { title: 'SUBWAY STATION 5', temp: '-10℃', risk: 'LOW', desc: '감염체가 없는 임시 피난처.' }, 'F': { title: 'COLLAPSED BRIDGE', temp: '-35℃', risk: 'HIGH', desc: '다리가 끊겨 우회해야 함.' } };
-        function updateMapInfo(id) { const d = mapData[id]; const content = document.getElementById('infoContent'); content.style.justifyContent = 'flex-start'; content.style.textAlign = 'left'; content.innerHTML = ` <div class="map-img-box">MAP VISUAL [${id}]</div> <div style="font-size:1.5rem; font-weight:bold; color:#fff;">${d.title}</div> <div style="color:#00d4ff;">${d.temp}</div> <div style="color:${d.risk==='SAFE'?'#4caf50':(d.risk==='LOW'?'#ffaa00':'#bb0000')};">${d.risk}</div> <hr style="border-color:#333; margin:15px 0;"> <p style="color:#ccc; line-height:1.6;">${d.desc}</p> <button class="map-reset-btn" onclick="resetMap()">> CLOSE SIGNAL</button> `; }
-        function resetMap() { const content = document.getElementById('infoContent'); content.style.justifyContent = 'center'; content.style.textAlign = 'center'; content.innerHTML = `> WAITING FOR SIGNAL...<br>> SELECT SECTOR PIN`; }
+        const mapData = { 
+            'A': { title: 'HOEHYEON STN.', temp: '-12℃', risk: 'MEDIUM', desc: '유니온(Union)의 본거지.<br>철저한 통제가 이루어지는 지하 요새.', img: 'image_2.png' }, 
+            'B': { title: 'SECRET BUNKER', temp: '5℃', risk: 'SAFE', desc: '남산 어딘가에 숨겨진 비밀 벙커.<br>현재 생존자들의 안전 가옥.', img: 'image_3.png' }, 
+            'C': { title: 'MRC LAB HQ', temp: '-20℃', risk: 'EXTREME', desc: '구 정부 청사를 개조한 MRC의 본부.<br>접근 시 발포함.', img: 'image_4.png' }, 
+            'D': { title: 'SEOUL STATION', temp: '-15℃', risk: 'HIGH', desc: '무너진 교통의 요지.<br>수많은 감염체들이 배회하는 위험 지역.', img: 'image_0.png' }, 
+            'E': { title: 'YEOUIDO HOSPITAL', temp: '-18℃', risk: 'MEDIUM', desc: '반쯤 무너진 종합 병원.<br>의약품이 남아있을 가능성이 있다.', img: 'image_5.png' }, 
+            'F': { title: 'FROZEN HAN-RIVER', temp: '-35℃', risk: 'HIGH', desc: '얼어붙은 거대한 강.<br>빙판 아래 무엇이 있는지 알 수 없다.', img: 'image_1.png' } 
+        };
+        
+        function updateMapInfo(id) { 
+            const d = mapData[id]; 
+            const content = document.getElementById('infoContent'); 
+            content.style.justifyContent = 'flex-start'; 
+            content.style.textAlign = 'left'; 
+            const bgStyle = `background: linear-gradient(transparent 50%, rgba(0,0,0,0.1) 50%), url('${d.img}') no-repeat center center / cover; background-size: 100% 4px, cover;`;
+            content.innerHTML = ` 
+                <div class="map-img-box" style="${bgStyle}"></div> 
+                <div style="font-size:1.5rem; font-weight:bold; color:#fff;">${d.title}</div> 
+                <div style="color:#00d4ff;">${d.temp}</div> 
+                <div style="color:${d.risk==='SAFE'?'#4caf50':(d.risk==='MEDIUM'?'#ffaa00':'#bb0000')};">${d.risk}</div> 
+                <hr style="border-color:#333; margin:15px 0;"> 
+                <p style="color:#ccc; line-height:1.6;">${d.desc}</p> 
+                <button class="map-reset-btn" onclick="resetMap()">> CLOSE SIGNAL</button> 
+            `; 
+        }
+        function resetMap() { 
+            const content = document.getElementById('infoContent'); 
+            content.style.justifyContent = 'center'; 
+            content.style.textAlign = 'center'; 
+            content.innerHTML = `<div class="cmd-blink">> WAITING FOR SIGNAL...<br>> SELECT SECTOR PIN</div>`; 
+        }
 
         const factions = {
             'bunker': [ 
-                { name: 'Jung-woo Ji', role: 'Leader (28M)', desc: '지하 방공호의 리더.\n특유의 카리스마로 그룹을 이끌고 있다.' }, 
-                { 
-                    name: 'Seol-ah Yoo', role: 'Survivor (22F)', desc: '혹독한 환경에 빠르게 적응한 생존자.\n판단력이 빠르고 민첩하다.', 
-                    imgSmall: '8959fc82-51ff-40ad-b798-f79d16daaafb.jpg', 
-                    imgDetail: 'c55dd033-8d69-456f-b885-e4d563a45842.jpg' 
-                }, 
-                { name: 'Ji-yu Ha', role: 'Teenager (15F)', desc: '그룹의 막내. 희망을 잃지 않으려 노력한다.\nMRC 소속 하지철의 여동생.' }, 
-                { name: 'Min-woo Kim', role: 'DECEASED', desc: '혹한기 초기에 실종되어 사망 처리됨.\n그의 흔적만이 방공호에 남아있다.', status: 'dead' } 
+                { name: 'Jung-woo Ji', role: 'Leader', age: '28', sex: 'MALE', desc: '지하 방공호의 리더.\n특유의 카리스마로 그룹을 이끌고 있다.' }, 
+                { name: 'Seol-ah Yoo', role: 'Survivor', age: '22', sex: 'FEMALE', desc: '혹독한 환경에 빠르게 적응한 생존자.\n판단력이 빠르고 민첩하다.', imgSmall: '8959fc82-51ff-40ad-b798-f79d16daaafb.jpg', imgDetail: 'c55dd033-8d69-456f-b885-e4d563a45842.jpg' }, 
+                { name: 'Ji-yu Ha', role: 'Teenager', age: '15', sex: 'FEMALE', desc: '그룹의 막내. 희망을 잃지 않으려 노력한다.\nMRC 소속 하지철의 여동생.' }, 
+                { name: 'Min-woo Kim', role: 'DECEASED', age: '[[ REDACTED ]]', sex: 'MALE', desc: '[[ DATA EXPUNGED ]]\n\n기록이 말소된 데이터입니다.', status: 'dead', corrupted: true } 
             ],
-            'union': [ { name: 'Hwa-yeon Kang', role: 'Representative (28F)', desc: '회현역 연합의 대표.\n냉철하고 계산적인 성격으로 조직을 운영한다.' }, { name: 'Hwa-jin Kang', role: 'Vice Rep. (26M)', desc: '강화연의 남동생이자 부대표.\n엄격한 신분제 규칙을 집행하는 관리자.' }, { name: 'Jin-ah Lee', role: 'Lower Class (20F)', desc: '미등록 하급 계급 거주자.\n하루하루 힘겹게 생존을 이어가고 있다.' } ],
-            'mrc': [ { name: 'Min-ho Kang', role: 'Chief Commander (45M)', desc: 'MRC의 군사장이자 총책임자.\n한국 재건을 위해서라면 수단과 방법을 가리지 않는다.' }, { name: 'Ji-cheol Ha', role: 'Subject / Soldier (23M)', desc: '생체 실험으로 강화된 군인.\n하지유의 친오빠지만 현재는 MRC의 명령만 따른다.' }, { name: 'Seo-jin Park', role: 'Head Researcher (31F)', desc: 'MRC 연구소장.\n괴물 통제권을 얻기 위해 위험한 실험을 주도한다.' } ],
+            'union': [ 
+                { name: 'Hwa-yeon Kang', role: 'Representative', age: '28', sex: 'FEMALE', desc: '회현역 연합의 대표.\n냉철하고 계산적인 성격으로 조직을 운영한다.' }, 
+                { name: 'Hwa-jin Kang', role: 'Vice Rep.', age: '26', sex: 'MALE', desc: '강화연의 남동생이자 부대표.\n엄격한 신분제 규칙을 집행하는 관리자.' }, 
+                { name: 'Jin-ah Lee', role: 'Lower Class', age: '20', sex: 'FEMALE', desc: '미등록 하급 계급 거주자.\n하루하루 힘겹게 생존을 이어가고 있다.' } 
+            ],
+            'mrc': [ 
+                { name: 'Min-ho Kang', role: 'Chief Commander', age: '45', sex: 'MALE', desc: 'MRC의 군사장이자 총책임자.\n한국 재건을 위해서라면 수단과 방법을 가리지 않는다.' }, 
+                { name: 'Ji-cheol Ha', role: 'Subject / Soldier', age: '23', sex: 'MALE', desc: '생체 실험으로 강화된 군인.\n하지유의 친오빠지만 현재는 MRC의 명령만 따른다.' }, 
+                { name: 'Seo-jin Park', role: 'Head Researcher', age: '31', sex: 'FEMALE', desc: 'MRC 연구소장.\n괴물 통제권을 얻기 위해 위험한 실험을 주도한다.' } 
+            ],
             'none': [ 
-                { name: 'Man-chun Hwang', role: 'Ex-Spec Forces (72M)', desc: '전직 특수부대장 출신의 노인.\n얼어붙은 황무지에서 전설적인 생존자로 불린다.' }, 
-                { name: '???', role: 'Unknown', desc: '신원 미상.\n목적도 정체도 알 수 없는 방랑자.' },
-                { name: '???', role: 'Data Corrupted', desc: '해당 인물에 대한 정보가 손상되었습니다.\n복구 불가능.' }
+                { name: 'Man-chun Hwang', role: 'Ex-Spec Forces', age: '72', sex: 'MALE', desc: '전직 특수부대장 출신의 노인.\n얼어붙은 황무지에서 전설적인 생존자로 불린다.' }, 
+                { name: '???', role: 'Unknown', age: '???', sex: '???', desc: '신원 미상.\n목적도 정체도 알 수 없는 방랑자.' },
+                { name: '???', role: 'CORRUPTED', age: 'ERR', sex: 'ERR', desc: '[[ SYSTEM FAILURE ]]\n\n데이터 복구 불가능.\n접근 권한이 없습니다.', corrupted: true }
             ]
         };
+        
         let currentFaction = null;
+        let mobileFactionIdx = 0;
+        const factionKeys = ['bunker', 'union', 'mrc', 'none'];
+
         function loadFaction(fid) { 
+            // PC: Active Class
             document.querySelectorAll('.faction-card').forEach(c => c.classList.remove('active-faction')); 
             document.getElementById('fac-'+fid).classList.add('active-faction'); 
-            document.getElementById('factionGrid').classList.add('minimized'); 
+            // PC: Minimized Grid
+            if(window.innerWidth > 768) {
+                document.getElementById('factionGrid').classList.add('minimized'); 
+            }
+            
+            // 모바일: 현재 선택된 카드로 인덱스 맞춤 (터치 시)
+            mobileFactionIdx = factionKeys.indexOf(fid);
+            updateMobileFactionView();
+
             const listContent = document.getElementById('charListContent'); 
             listContent.innerHTML = ''; 
             factions[fid].forEach((char, idx) => { 
@@ -461,48 +646,95 @@
                 div.className = `small-char-card ${char.status === 'dead' ? 'deceased' : ''}`; 
                 div.id = `small-card-${idx}`; 
                 div.onclick = () => showDetail(fid, idx); 
-                 
                 const bgStyle = char.imgSmall ? `background-image: url('${char.imgSmall}'); background-size: cover; background-position: center;` : '';
                 const imgContent = char.imgSmall ? '' : 'IMG';
-
-                div.innerHTML = `
-                    <div class="small-char-img-area" style="${bgStyle}">${imgContent}</div>
-                    <div class="small-char-name">${char.name}</div>
-                `; 
+                div.innerHTML = `<div class="small-char-img-area" style="${bgStyle}">${imgContent}</div><div class="small-char-name">${char.name}</div>`; 
                 listContent.appendChild(div); 
             }); 
             document.getElementById('charListWrapper').classList.add('open'); 
             document.getElementById('charDetailView').classList.remove('open'); 
             currentFaction = fid; 
         }
+
+        // [모바일 전용] 세력 카드 이동 로직
+        function moveMobileFaction(dir) {
+            mobileFactionIdx += dir;
+            if(mobileFactionIdx < 0) mobileFactionIdx = factionKeys.length - 1;
+            if(mobileFactionIdx >= factionKeys.length) mobileFactionIdx = 0;
+            updateMobileFactionView();
+            // 이동 시 해당 세력 자동 로드
+            loadFaction(factionKeys[mobileFactionIdx]);
+        }
+
+        function updateMobileFactionView() {
+            if(window.innerWidth > 768) return; // PC에선 실행 안함
+            
+            factionKeys.forEach((key, idx) => {
+                const card = document.getElementById('fac-' + key);
+                card.classList.remove('mobile-active', 'mobile-prev', 'mobile-next');
+                
+                if(idx === mobileFactionIdx) {
+                    card.classList.add('mobile-active');
+                } else if (idx === (mobileFactionIdx - 1 + 4) % 4) {
+                    card.classList.add('mobile-prev');
+                } else if (idx === (mobileFactionIdx + 1) % 4) {
+                    card.classList.add('mobile-next');
+                }
+            });
+        }
+        
         function showDetail(fid, idx) { 
             document.querySelectorAll('.small-char-card').forEach(c => c.classList.remove('selected')); 
             document.getElementById(`small-card-${idx}`).classList.add('selected'); 
             const data = factions[fid][idx]; 
-            document.getElementById('detailName').innerText = data.name; 
-            document.getElementById('detailRole').innerText = data.role; 
-            document.getElementById('detailDesc').innerText = data.desc; 
-             
+            const detailView = document.getElementById('charDetailView');
+            const detailName = document.getElementById('detailName');
+            const detailRole = document.getElementById('detailRole');
             const imgBox = document.getElementById('detailImg');
-            if(data.imgDetail) {
-                imgBox.style.backgroundImage = `url('${data.imgDetail}')`;
-                imgBox.style.backgroundSize = 'cover';
-                imgBox.style.backgroundPosition = 'center';
-                imgBox.innerText = '';
-            } else {
-                imgBox.style.backgroundImage = 'none';
-                imgBox.innerText = 'IMG AREA';
-            }
 
+            detailName.innerText = data.name; 
+            detailRole.innerText = data.role; 
+            document.getElementById('detailDescText').innerText = data.desc; 
+            document.querySelector('#detailAge .db-value').innerText = data.age;
+            document.querySelector('#detailSex .db-value').innerText = data.sex;
+
+            if (data.corrupted) {
+                detailView.classList.add('corrupted-mode');
+                detailName.classList.add('corrupted-text');
+                imgBox.classList.add('corrupted-img');
+                imgBox.innerText = ''; 
+                imgBox.style.backgroundImage = 'none';
+            } else {
+                detailView.classList.remove('corrupted-mode');
+                detailName.classList.remove('corrupted-text');
+                imgBox.classList.remove('corrupted-img');
+                if(data.imgDetail) {
+                    imgBox.style.backgroundImage = `url('${data.imgDetail}')`;
+                    imgBox.style.backgroundSize = 'cover';
+                    imgBox.style.backgroundPosition = 'center';
+                    imgBox.innerText = '';
+                } else {
+                    imgBox.style.backgroundImage = 'none';
+                    imgBox.innerText = 'IMG AREA';
+                }
+            }
             const statArea = document.getElementById('detailStatArea'); 
             if(data.status === 'dead') { 
                 statArea.innerHTML = '<span class="stat-badge dead">STATUS: DECEASED</span>'; 
-                document.getElementById('detailName').style.color = '#888'; 
+                detailName.style.color = '#888'; 
+                if(data.corrupted) detailName.style.color = '#880000'; 
             } else { 
                 statArea.innerHTML = '<span class="stat-badge">STATUS: ALIVE</span>'; 
-                document.getElementById('detailName').style.color = '#fff'; 
+                detailName.style.color = '#fff'; 
             } 
-            document.getElementById('charDetailView').classList.add('open'); 
+            detailView.classList.add('open'); 
+            
+            // 모바일에서 상세 정보 열릴 때 해당 위치로 스크롤
+            if(window.innerWidth <= 768) {
+                setTimeout(() => {
+                    detailView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
         }
 
         const dbContent = { "지구공학 프로젝트": `PROJECT: GAIA (INITIATIVE 2034)\nCLASSIFICATION: TOP SECRET // DECLASSIFIED 2041\n\n[OVERVIEW]\n2034년, 제네바 기후 협약의 일환으로 승인된 '가이아 프로젝트'는 대기권에 특수 나노 입자를 살포하여 태양열을 물리적으로 차단, 지구 온난화를 역전시키기 위한 최후의 수단이었다. \n\n[FAILURE ANALYSIS]\n살포된 입자는 예상치 못한 화학 반응을 일으켜 오존층을 파괴하고, 동시에 지표면의 열 반사율(Albedo)을 기형적으로 높였다. 이로 인해 영구동토층이 급격히 융해되었으며, 그 과정에서 봉인되어 있던 고대 바이러스군이 대기로 유출되었다. 현재 지구 기온은 산업화 이전 대비 -40℃ 이하로 급감했다.`, "미지의 바이러스": `CODE NAME: PALE-X\nORIGIN: SIBERIAN PERMAFROST\nTRANSMISSION: AIRBORNE / FLUID CONTACT\n\n[PATHOLOGY]\n시베리아 영구동토층에서 발견된 이 고대 병원체는 현대 의학으로 분석 불가능한 단백질 구조를 가지고 있다. 감염 후 24시간의 잠복기를 거치며, 숙주의 뇌세포를 파괴하고 공격성을 극대화하는 신경 조작 능력을 보인다. \n\n[CURRENT STATUS]\n치료제 개발은 전무하며, 기존의 항바이러스제는 효과가 없다. 감염된 개체는 추위에 대한 내성이 비약적으로 상승하며, 신체 구조가 변이되어 '괴물'이라 불리는 형태로 진화한다.`, "세계 정부 붕괴": `STATUS: GLOBAL ANARCHY\nDATE: 2035. 12. 25 (BLACK CHRISTMAS)\n\n[SEQUENCE OF EVENTS]\n바이러스의 창궐과 극한의 추위로 인해 주요 통신망이 마비되었다. 각국 지도부는 벙커로 대피했으나, 군 지휘 통제 시스템(C4I)의 붕괴로 인해 사실상 모든 행정력이 상실되었다. \n\n[CURRENT STATE]\n국경의 의미는 사라졌으며, 도시는 약탈과 무질서의 장이 되었다. 소수의 군벌, 종교 집단, 그리고 생존자 커뮤니티만이 각자의 법으로 통치되는 점조직 형태로 남아있다.`, "화이트 아웃": `METEOROLOGICAL PHENOMENON: WHITE OUT\nVISIBILITY: ZERO\nDANGER LEVEL: CRITICAL\n\n[DESCRIPTION]\n대기의 불안정으로 인해 발생하는 초대형 눈보라. 시속 100km 이상의 강풍과 함께 엄청난 양의 눈이 쏟아져, 시야를 완전히 차단한다. 지형지물을 식별할 수 없게 되어 방향 감각을 상실하게 만든다.\n\n[SURVIVAL PROTOCOL]\n화이트 아웃 발생 시 즉시 실내로 대피해야 한다. 야외에 고립될 경우 체감 온도는 영하 70도까지 떨어지며, 10분 이내에 저체온증으로 사망할 확률이 99%에 달한다.`, "움직이는 시체": `ENTITY: WALKER\nTYPE: REANIMATED INFECTED\n\n[BIOLOGY]\n바이러스에 의해 사망한 후, 뇌간의 원초적 기능만이 재가동된 상태. 심장은 뛰지 않으며 혈액은 응고되었으나, 근육은 바이러스의 자극으로 인해 계속해서 수축과 이완을 반복한다. 통각을 느끼지 못하며, 신체 부위가 절단되어도 뇌가 파괴되기 전까지는 활동을 멈추지 않는다.\n\n[THREAT]\n개체의 이동 속도는 느리지만, 청각과 후각이 극도로 발달해 있다. 산 사람의 냄새를 맡으면 무리를 지어 끝까지 추적하는 집요함을 보인다.`, "러너": `VARIANT TYPE-A: RUNNER\nTHREAT LEVEL: HIGH\n\n[MUTATION DATA]\n초기 감염 단계에서 신체 대사량이 폭발적으로 증가한 변이체. 근섬유가 비정상적으로 강화되어 있으며, 뼈의 밀도가 높아져 골절이 잘 일어나지 않는다. \n\n[COMBAT INTEL]\n인간보다 빠른 속도(최대 시속 40km)로 질주할 수 있다. 장애물을 넘거나 벽을 타는 등 높은 기동성을 보여주며, 사냥감을 발견하면 괴성을 질러 주변의 다른 감염체들을 불러모으는 습성이 있다.`, "스펏": `VARIANT TYPE-B: SPITTER\nTHREAT LEVEL: HIGH (RANGED)\n\n[MUTATION DATA]\n위장과 식도 부위가 거대하게 부풀어 오른 변이체. 내부에는 바이러스와 위산이 섞인 고농도의 부식성 독액이 생성된다. \n\n[COMBAT INTEL]\n최대 15m 거리에서 독액을 분사한다. 이 액체에 닿으면 피부가 즉시 괴사할 뿐만 아니라, 급속 냉동 효과를 일으켜 피격 부위를 얼어붙게 만든다. 원거리에서 우선적으로 제거해야 할 대상이다.`, "도거": `VARIANT TYPE-C: DOGGER\nORIGIN: CANINE (DOG/WOLF)\n\n[MUTATION DATA]\n바이러스에 감염된 개과 동물들. 털이 빠지고 근육이 외부로 노출되어 있으며, 턱관절이 기형적으로 발달해 악력이 강화되었다. \n\n[HUNTING PATTERN]\n무리(Pack)를 지어 사냥하는 습성이 남아있다. 우두머리 개체의 통솔 하에 사냥감을 포위하고 협공한다. 작고 빠르기 때문에 조준 사격이 어려우며, 특히 야간에 기습적으로 공격해오는 경우가 많다.`, "봄버": `VARIANT TYPE-D: BOMBER\nSIZE: 3 METERS (APPROX.)\nABILITY: VOLATILE EXPLOSION\n\n[MUTATION DATA]\n복부에 가연성 가스와 독성 체액이 가득 찬 거대 변이체. 피부가 팽창하여 매우 얇아진 상태로, 작은 충격에도 쉽게 파열된다. \n\n[DANGER]\n생존자를 감지하면 자살 돌격하여 자폭한다. 폭발 반경 10m 내의 모든 생명체에게 치명상을 입히며, 폭발 후에는 주변에 독성 가스를 살포하여 2차 피해를 유발한다.`, "설인": `VARIANT TYPE-OMEGA: YETI\nSTATUS: APEX PREDATOR (BOSS)\n\n[OBSERVATION LOG]\n키 5m 이상의 거구. 온몸이 하얀 털과 얼음 갑옷으로 뒤덮여 있어 일반적인 화기로는 피해를 주기 어렵다. 초재생 능력을 보유하고 있어 부상을 입어도 순식간에 회복한다.\n\n[ADVISORY]\n자신의 영역을 설정하고 그 안에서만 활동한다. 영역 밖으로 도주하면 추격을 멈추는 경향이 있다. 현재 인류의 화력으로는 사살이 불가능에 가까우므로, 조우 시 교전을 피하고 즉시 이탈할 것을 강력히 권고한다.` };
@@ -515,6 +747,9 @@
         function renderNewsPage(idx) { const dateEl = document.getElementById('newsDate'); const contentEl = document.getElementById('newsArticle'); const pageNumEl = document.getElementById('pageNum'); contentEl.classList.remove('fade-out'); void contentEl.offsetWidth; contentEl.classList.add('fade-out'); setTimeout(() => { dateEl.innerText = newsPages[idx].date; contentEl.innerHTML = newsPages[idx].content; pageNumEl.innerText = idx + 1; contentEl.classList.remove('fade-out'); }, 300); }
         function nextPage() { currPage = (currPage + 1) % newsPages.length; renderNewsPage(currPage); document.getElementById('dbScreen').innerHTML = `<div class="empty-state">[SYSTEM READY]<br>Scanning new document...<br><br>Select a <span style="color:#800000;">keyword</span> to analyze.</div>`; }
         function showDb(key) { const data = dbContent[key]; const screen = document.getElementById('dbScreen'); if(data) { screen.innerHTML = `<div class="db-data-row"><span class="db-key">TARGET ANALYSIS:</span><span class="db-val" style="color:#fff; font-size:1.1rem; border-bottom:1px solid #333; padding-bottom:5px; display:block;">${key}</span></div><div class="db-data-row"><span class="db-key">DETAILS:</span><span class="db-val">${data}</span></div>`; } }
+        
+        // 윈도우 리사이즈 시 모바일 뷰 체크
+        window.addEventListener('resize', updateMobileFactionView);
     </script>
 </body>
 </html>
