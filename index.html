@@ -43,31 +43,24 @@
             position: fixed; top: 50%; left: 30px; transform: translateY(-50%);
             z-index: 1000; display: flex; flex-direction: column; gap: 20px;
         }
-        
         .nav-item {
             display: flex; align-items: center; gap: 12px;
             text-decoration: none; cursor: pointer; group;
         }
-
         .nav-bar {
             width: 3px; height: 15px; background: #444;
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
-
         .nav-text {
             font-size: 0.7rem; color: #666; font-weight: bold; text-transform: uppercase;
             letter-spacing: 2px; opacity: 0; transform: translateX(-10px);
             transition: all 0.3s ease;
         }
-
-        .nav-item.active .nav-bar, 
-        .nav-item:hover .nav-bar {
+        .nav-item.active .nav-bar, .nav-item:hover .nav-bar {
             background: var(--ice-blue); height: 30px; width: 4px;
             box-shadow: 0 0 10px var(--ice-blue);
         }
-
-        .nav-item.active .nav-text,
-        .nav-item:hover .nav-text {
+        .nav-item.active .nav-text, .nav-item:hover .nav-text {
             opacity: 1; transform: translateX(0); color: #fff;
         }
 
@@ -120,29 +113,78 @@
         .map-reset-btn { background: transparent; border: 1px solid #444; color: #666; padding: 5px 10px; margin-top: 20px; cursor: pointer; font-family: monospace; font-size: 0.8rem; transition: all 0.3s; }
         .map-reset-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
 
-        /* 4. 인물 */
+        /* 4. 인물 - 수정됨 */
         .faction-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; transition: all 0.5s ease; margin-bottom: 30px; }
         .faction-grid.minimized { transform: scale(0.95); opacity: 0.4; }
-        .faction-card { background: #111; border: 1px solid #333; height: 400px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
-        .faction-card:hover { border-color: var(--ice-blue); box-shadow: 0 0 20px rgba(165,243,252,0.1); }
-        .faction-card.active-faction { border-color: var(--accent-red); transform: scale(1.02); z-index: 5; opacity: 1 !important; }
-        .faction-overlay { background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 20px; width: 100%; box-sizing: border-box; }
-        .faction-name { font-size: 1.4rem; font-weight: bold; text-transform: uppercase; color: #fff; margin-bottom: 5px; }
+        .faction-card { background: #111; border: 1px solid #333; height: 400px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 10px); }
+        .faction-card:hover { border-color: var(--ice-blue); box-shadow: 0 0 25px rgba(165,243,252,0.15); transform: translateY(-5px); }
+        .faction-card::before { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, transparent, rgba(165, 243, 252, 0.2)); transition: top 0.5s; pointer-events: none; }
+        .faction-card:hover::before { top: 100%; }
+        .faction-card.active-faction { border-color: var(--accent-red); background: linear-gradient(to bottom, #1a0505, #000); opacity: 1 !important; transform: scale(1.02); z-index: 5; }
+        .faction-overlay { background: linear-gradient(to top, rgba(0,0,0,1), transparent); padding: 25px; width: 100%; box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.1); }
+        .faction-name { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
         .faction-desc { font-size: 0.9rem; color: #aaa; line-height: 1.5; height: 60px; overflow: hidden; }
-        .char-list-wrapper { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s ease; background: rgba(0,0,0,0.3); border-top: 1px solid #333; border-bottom: 1px solid #333; }
-        .char-list-wrapper.open { height: 280px; opacity: 1; padding: 20px 0; margin-bottom: 20px; }
-        .char-list-scroll { display: flex; gap: 20px; overflow-x: auto; padding: 10px; scrollbar-width: thin; scrollbar-color: var(--accent-red) #222; }
-        .small-char-card { min-width: 180px; height: 220px; background: #1a1a1a; border: 1px solid #444; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.2s; flex-shrink: 0; position: relative; }
-        .small-char-card:hover { border-color: #fff; }
-        .small-char-card.selected { border: 2px solid var(--ice-blue); box-shadow: 0 0 15px rgba(165,243,252,0.2); }
-        .small-char-name { background: rgba(0,0,0,0.7); width: 100%; padding: 10px; box-sizing: border-box; font-size: 1rem; font-weight: bold; text-align: center; }
-        .small-char-card.deceased { filter: grayscale(1); opacity: 0.6; }
-        .char-detail-view { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s ease; display: flex; gap: 40px; background: rgba(20,20,20,0.95); border: 1px solid #333; }
+        .char-list-wrapper { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); background: #0a0a0a; border-top: 1px solid #333; border-bottom: 1px solid #333; background-image: linear-gradient(rgba(50, 255, 50, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 255, 50, 0.03) 1px, transparent 1px); background-size: 50px 50px; position: relative; }
+        .char-list-wrapper::after { content: "PERSONNEL DATABASE // ACCESS GRANTED"; position: absolute; bottom: 10px; right: 20px; font-size: 3rem; color: rgba(255,255,255,0.03); font-weight: 900; pointer-events: none; }
+        .char-list-wrapper.open { height: 300px; opacity: 1; padding: 30px 0; margin-bottom: 20px; }
+        .char-list-scroll { display: flex; gap: 25px; overflow-x: auto; padding: 10px 40px; scrollbar-width: thin; scrollbar-color: var(--accent-red) #111; align-items: center; height: 100%; }
+        
+        /* small-char-card 수정 (아날로그 감성) */
+        .small-char-card { min-width: 160px; height: 240px; background: #111; border: 1px solid #333; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s; flex-shrink: 0; position: relative; border-top: 3px solid #555; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.8); }
+        .small-char-card:hover { border-color: #888; border-top-color: var(--ice-blue); transform: translateY(-3px); }
+        .small-char-card.selected { border: 1px solid var(--ice-blue); box-shadow: 0 0 15px rgba(165,243,252,0.1); border-top: 3px solid var(--ice-blue); }
+        
+        /* small-char-img-area 수정 (글리치 + 다크 + 스캔라인) */
+        .small-char-img-area { 
+            flex: 1; background: #050505; margin: 8px; border: 1px solid #222; display: flex; justify-content: center; align-items: center; color: #444; font-size: 0.8rem; overflow: hidden; position: relative; 
+            filter: brightness(0.8) contrast(1.1) sepia(0.2); /* 어둡고 낡은 느낌 */
+            transition: filter 0.3s;
+        }
+        .small-char-card:hover .small-char-img-area { filter: brightness(1.0) contrast(1.0) sepia(0); }
+        
+        /* 스캔라인 효과 */
+        .small-char-img-area::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px; z-index: 2; pointer-events: none; opacity: 0.6;
+        }
+
+        /* 좌우 치지직 글리치 효과 */
+        .small-char-img-area::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 3; pointer-events: none; opacity: 0; }
+        .small-char-card:hover .small-char-img-area::after { animation: glitch-anim-horiz 2.5s infinite; opacity: 1; background: rgba(165, 243, 252, 0.05); }
+
+        @keyframes glitch-anim-horiz {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); }
+            5% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
+            10% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 0); }
+            15% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+            20% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0); }
+            25% { clip-path: inset(0% 0 100% 0); transform: translate(0, 0); } /* 잠시 멈춤 */
+            100% { clip-path: inset(0% 0 100% 0); transform: translate(0, 0); }
+        }
+        
+        .small-char-name { background: #1a1a1a; width: 100%; padding: 10px; box-sizing: border-box; font-size: 0.85rem; font-weight: bold; text-align: center; color: #bbb; border-top: 1px solid #333; letter-spacing: 1px; }
+        .small-char-card.deceased { filter: grayscale(1) brightness(0.5); border-top-color: #333; }
+        .small-char-card.deceased .small-char-name { text-decoration: line-through; color: #444; }
+        
+        /* char-detail-view 수정 (롤백 + 비율 조정) */
+        .char-detail-view { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s ease; display: flex; gap: 40px; background: rgba(10,15,20,0.95); border: 1px solid #333; align-items: stretch; }
         .char-detail-view.open { height: 400px; opacity: 1; padding: 30px; border-color: var(--ice-blue); }
-        .detail-img-box { flex: 1; background: #000; border: 1px solid #444; display: flex; justify-content: center; align-items: center; color: #444; }
-        .detail-info-box { flex: 2; display: flex; flex-direction: column; justify-content: center; }
-        .detail-name { font-size: 2.5rem; color: #fff; margin: 0 0 10px 0; border-bottom: 2px solid var(--accent-red); padding-bottom: 10px; display: inline-block; }
-        .detail-role { color: var(--ice-blue); font-size: 1.2rem; margin-bottom: 20px; font-weight: bold; }
+        
+        /* detail-img-box 수정 (적당한 크기로 롤백 + 꾸미기) */
+        .detail-img-box { 
+            flex: 0 0 35%; /* 너비를 35%로 고정 (나머지 65%는 텍스트) */
+            background: #000; border: 1px solid #444; display: flex; justify-content: center; align-items: center; color: #444; position: relative; 
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8); 
+        }
+        .detail-img-box::before, .detail-img-box::after { content: ''; position: absolute; width: 20px; height: 20px; border-color: var(--ice-blue); border-style: solid; z-index: 2; }
+        .detail-img-box::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+        .detail-img-box::after { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+        
+        /* detail-info-box 수정 */
+        .detail-info-box { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .detail-name { font-size: 2.5rem; color: #fff; margin: 0 0 10px 0; border-bottom: 2px solid var(--accent-red); padding-bottom: 10px; display: inline-block; font-family: 'Courier New', monospace; }
+        .detail-role { color: var(--ice-blue); font-size: 1.2rem; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; }
         .detail-desc { font-size: 1rem; color: #ccc; line-height: 1.8; white-space: pre-line; }
         .detail-stat { margin-top: 20px; display: flex; gap: 20px; }
         .stat-badge { background: #222; padding: 5px 15px; border-radius: 4px; border: 1px solid #444; font-size: 0.8rem; color: #888; }
@@ -213,30 +255,12 @@
 
     <div id="mainContainer">
         <nav class="side-nav">
-            <a href="#main" class="nav-item active" data-target="main">
-                <div class="nav-bar"></div>
-                <span class="nav-text">MAIN</span>
-            </a>
-            <a href="#game-intro" class="nav-item" data-target="game-intro">
-                <div class="nav-bar"></div>
-                <span class="nav-text">OVERVIEW</span>
-            </a>
-            <a href="#world-map" class="nav-item" data-target="world-map">
-                <div class="nav-bar"></div>
-                <span class="nav-text">MAP</span>
-            </a>
-            <a href="#factions" class="nav-item" data-target="factions">
-                <div class="nav-bar"></div>
-                <span class="nav-text">FACTIONS</span>
-            </a>
-            <a href="#story" class="nav-item" data-target="story">
-                <div class="nav-bar"></div>
-                <span class="nav-text">INTEL</span>
-            </a>
-            <a href="#play-link" class="nav-item" data-target="play-link">
-                <div class="nav-bar"></div>
-                <span class="nav-text">PLAY</span>
-            </a>
+            <a href="#main" class="nav-item active" data-target="main"><div class="nav-bar"></div><span class="nav-text">MAIN</span></a>
+            <a href="#game-intro" class="nav-item" data-target="game-intro"><div class="nav-bar"></div><span class="nav-text">OVERVIEW</span></a>
+            <a href="#world-map" class="nav-item" data-target="world-map"><div class="nav-bar"></div><span class="nav-text">MAP</span></a>
+            <a href="#factions" class="nav-item" data-target="factions"><div class="nav-bar"></div><span class="nav-text">FACTIONS</span></a>
+            <a href="#story" class="nav-item" data-target="story"><div class="nav-bar"></div><span class="nav-text">INTEL</span></a>
+            <a href="#play-link" class="nav-item" data-target="play-link"><div class="nav-bar"></div><span class="nav-text">PLAY</span></a>
         </nav>
 
         <section id="main">
@@ -258,11 +282,7 @@
                         <span class="vital-icon">❄️</span>
                         <div class="vital-title">HYPOTHERMIA</div>
                         <div class="vital-status">CRITICAL LEVEL</div>
-                        <div class="vital-desc">
-                            영하 50도. 극한의 혹한 환경.<br>
-                            체온 저하는 곧 사망으로 직결됨.<br>
-                            보온 장비 확보 및 체온 유지 필수.
-                        </div>
+                        <div class="vital-desc">영하 50도. 극한의 혹한 환경.<br>체온 저하는 곧 사망으로 직결됨.<br>보온 장비 확보 및 체온 유지 필수.</div>
                     </div>
                 </div>
                 <div class="vital-card v-yellow">
@@ -271,11 +291,7 @@
                         <span class="vital-icon">⚠️</span>
                         <div class="vital-title">THREAT LEVEL</div>
                         <div class="vital-status" style="color:#ffcc00; border-color:#ffcc00;">EXTREME DANGER</div>
-                        <div class="vital-desc">
-                            미확인 적대적 감염체 다수 식별.<br>
-                            높은 공격성 및 전염성 보유.<br>
-                            조우 시 즉각 사살 또는 회피 요망.
-                        </div>
+                        <div class="vital-desc">미확인 적대적 감염체 다수 식별.<br>높은 공격성 및 전염성 보유.<br>조우 시 즉각 사살 또는 회피 요망.</div>
                     </div>
                 </div>
                 <div class="vital-card v-red">
@@ -284,11 +300,7 @@
                         <span class="vital-icon">⚖️</span>
                         <div class="vital-title">INSANITY</div>
                         <div class="vital-status">UNSTABLE</div>
-                        <div class="vital-desc">
-                            생존자 간 신뢰도 하락.<br>
-                            약탈 및 배신 행위 빈번 발생.<br>
-                            선택에 따른 생존 확률 변동 주의.
-                        </div>
+                        <div class="vital-desc">생존자 간 신뢰도 하락.<br>약탈 및 배신 행위 빈번 발생.<br>선택에 따른 생존 확률 변동 주의.</div>
                     </div>
                 </div>
             </div>
@@ -364,16 +376,10 @@
             <h2>Select Your Path</h2>
             <div class="play-container">
                 <a href="https://share.crack.wrtn.ai/xadfa6r" target="_blank" class="play-card" id="card-remake">
-                    <div class="play-info">
-                        <span class="play-title">REMAKE</span>
-                        <span class="play-ver">UNSAFE</span>
-                    </div>
+                    <div class="play-info"><span class="play-title">REMAKE</span><span class="play-ver">UNSAFE</span></div>
                 </a>
                 <a href="https://share.crack.wrtn.ai/g20dpv" target="_blank" class="play-card" id="card-original">
-                    <div class="play-info">
-                        <span class="play-title">ORIGINAL</span>
-                        <span class="play-ver">SAFE</span>
-                    </div>
+                    <div class="play-info"><span class="play-title">ORIGINAL</span><span class="play-ver">SAFE</span></div>
                 </a>
             </div>
         </section>
@@ -388,7 +394,7 @@
     </div>
 
     <script>
-        // === JS 로직 (기존과 동일) ===
+        // === JS 로직 ===
         const sections = document.querySelectorAll('section');
         const navItems = document.querySelectorAll('.nav-item');
         const observerOptions = { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 };
@@ -419,13 +425,22 @@
         function finishIntro() { const intro = document.getElementById('intro'); const main = document.getElementById('mainContainer'); intro.style.opacity = '0'; main.style.display = 'block'; setTimeout(() => { main.style.opacity = '1'; intro.style.display = 'none'; document.body.style.overflowY = 'auto'; document.body.style.overflowX = 'hidden'; startSnowEffect(); const video = document.getElementById('bg-video'); if(video) video.play(); renderNewsPage(0); }, 500); }
         window.onload = function() { setTimeout(runTypingSequence, 500); const video = document.getElementById('bg-video'); if(video) video.addEventListener('ended', () => { video.classList.add('hidden'); }); };
         function startSnowEffect() { const c = document.getElementById('snow-canvas'); const ctx = c.getContext('2d'); const main = document.getElementById('main'); let w = main.clientWidth, h = main.clientHeight; c.width=w; c.height=h; const p = Array.from({length:150},()=>({x:Math.random()*w, y:Math.random()*h, r:Math.random()*2+1, v:Math.random()*1.5+0.5})); function draw(){ ctx.clearRect(0,0,w,h); ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.beginPath(); p.forEach(i=>{ ctx.moveTo(i.x,i.y); ctx.arc(i.x,i.y,i.r,0,Math.PI*2); i.x+=i.v; i.y+=i.v*0.8; if(i.x>w)i.x=-10; if(i.y>h)i.y=-10; }); ctx.fill(); requestAnimationFrame(draw); } draw(); window.addEventListener('resize', ()=>{ w=main.clientWidth; h=main.clientHeight; c.width=w; c.height=h; }); }
-        
+         
         const mapData = { 'A': { title: 'SEOUL RUINS', temp: '-45℃', risk: 'EXTREME', desc: '무너진 고층 빌딩 숲.' }, 'B': { title: 'MRC OUTPOST #3', temp: '-5℃', risk: 'SAFE', desc: '지열 발전기 가동 중.' }, 'C': { title: 'FROZEN RIVER', temp: '-30℃', risk: 'HIGH', desc: '얼어붙은 강.' }, 'D': { title: 'ABANDONED HOSPITAL', temp: '-20℃', risk: 'MEDIUM', desc: '의약품이 남아있을 가능성 있음.' }, 'E': { title: 'SUBWAY STATION 5', temp: '-10℃', risk: 'LOW', desc: '감염체가 없는 임시 피난처.' }, 'F': { title: 'COLLAPSED BRIDGE', temp: '-35℃', risk: 'HIGH', desc: '다리가 끊겨 우회해야 함.' } };
         function updateMapInfo(id) { const d = mapData[id]; const content = document.getElementById('infoContent'); content.style.justifyContent = 'flex-start'; content.style.textAlign = 'left'; content.innerHTML = ` <div class="map-img-box">MAP VISUAL [${id}]</div> <div style="font-size:1.5rem; font-weight:bold; color:#fff;">${d.title}</div> <div style="color:#00d4ff;">${d.temp}</div> <div style="color:${d.risk==='SAFE'?'#4caf50':(d.risk==='LOW'?'#ffaa00':'#bb0000')};">${d.risk}</div> <hr style="border-color:#333; margin:15px 0;"> <p style="color:#ccc; line-height:1.6;">${d.desc}</p> <button class="map-reset-btn" onclick="resetMap()">> CLOSE SIGNAL</button> `; }
         function resetMap() { const content = document.getElementById('infoContent'); content.style.justifyContent = 'center'; content.style.textAlign = 'center'; content.innerHTML = `> WAITING FOR SIGNAL...<br>> SELECT SECTOR PIN`; }
 
         const factions = {
-            'bunker': [ { name: 'Jung-woo Ji', role: 'Leader (28M)', desc: '지하 방공호의 리더.\n특유의 카리스마로 그룹을 이끌고 있다.' }, { name: 'Seol-ah Yoo', role: 'Survivor (22F)', desc: '혹독한 환경에 빠르게 적응한 생존자.\n판단력이 빠르고 민첩하다.' }, { name: 'Ji-yu Ha', role: 'Teenager (15F)', desc: '그룹의 막내. 희망을 잃지 않으려 노력한다.\nMRC 소속 하지철의 여동생.' }, { name: 'Min-woo Kim', role: 'DECEASED', desc: '혹한기 초기에 실종되어 사망 처리됨.\n그의 흔적만이 방공호에 남아있다.', status: 'dead' } ],
+            'bunker': [ 
+                { name: 'Jung-woo Ji', role: 'Leader (28M)', desc: '지하 방공호의 리더.\n특유의 카리스마로 그룹을 이끌고 있다.' }, 
+                { 
+                    name: 'Seol-ah Yoo', role: 'Survivor (22F)', desc: '혹독한 환경에 빠르게 적응한 생존자.\n판단력이 빠르고 민첩하다.', 
+                    imgSmall: '8959fc82-51ff-40ad-b798-f79d16daaafb.jpg', 
+                    imgDetail: 'c55dd033-8d69-456f-b885-e4d563a45842.jpg' 
+                }, 
+                { name: 'Ji-yu Ha', role: 'Teenager (15F)', desc: '그룹의 막내. 희망을 잃지 않으려 노력한다.\nMRC 소속 하지철의 여동생.' }, 
+                { name: 'Min-woo Kim', role: 'DECEASED', desc: '혹한기 초기에 실종되어 사망 처리됨.\n그의 흔적만이 방공호에 남아있다.', status: 'dead' } 
+            ],
             'union': [ { name: 'Hwa-yeon Kang', role: 'Representative (28F)', desc: '회현역 연합의 대표.\n냉철하고 계산적인 성격으로 조직을 운영한다.' }, { name: 'Hwa-jin Kang', role: 'Vice Rep. (26M)', desc: '강화연의 남동생이자 부대표.\n엄격한 신분제 규칙을 집행하는 관리자.' }, { name: 'Jin-ah Lee', role: 'Lower Class (20F)', desc: '미등록 하급 계급 거주자.\n하루하루 힘겹게 생존을 이어가고 있다.' } ],
             'mrc': [ { name: 'Min-ho Kang', role: 'Chief Commander (45M)', desc: 'MRC의 군사장이자 총책임자.\n한국 재건을 위해서라면 수단과 방법을 가리지 않는다.' }, { name: 'Ji-cheol Ha', role: 'Subject / Soldier (23M)', desc: '생체 실험으로 강화된 군인.\n하지유의 친오빠지만 현재는 MRC의 명령만 따른다.' }, { name: 'Seo-jin Park', role: 'Head Researcher (31F)', desc: 'MRC 연구소장.\n괴물 통제권을 얻기 위해 위험한 실험을 주도한다.' } ],
             'none': [ 
@@ -435,8 +450,60 @@
             ]
         };
         let currentFaction = null;
-        function loadFaction(fid) { document.querySelectorAll('.faction-card').forEach(c => c.classList.remove('active-faction')); document.getElementById('fac-'+fid).classList.add('active-faction'); document.getElementById('factionGrid').classList.add('minimized'); const listContent = document.getElementById('charListContent'); listContent.innerHTML = ''; factions[fid].forEach((char, idx) => { const div = document.createElement('div'); div.className = `small-char-card ${char.status === 'dead' ? 'deceased' : ''}`; div.id = `small-card-${idx}`; div.onclick = () => showDetail(fid, idx); div.innerHTML = `<div style="position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); color:#444; font-size:0.8rem;">IMG</div><div class="small-char-name">${char.name}</div>`; listContent.appendChild(div); }); document.getElementById('charListWrapper').classList.add('open'); document.getElementById('charDetailView').classList.remove('open'); currentFaction = fid; }
-        function showDetail(fid, idx) { document.querySelectorAll('.small-char-card').forEach(c => c.classList.remove('selected')); document.getElementById(`small-card-${idx}`).classList.add('selected'); const data = factions[fid][idx]; document.getElementById('detailName').innerText = data.name; document.getElementById('detailRole').innerText = data.role; document.getElementById('detailDesc').innerText = data.desc; const statArea = document.getElementById('detailStatArea'); if(data.status === 'dead') { statArea.innerHTML = '<span class="stat-badge dead">STATUS: DECEASED</span>'; document.getElementById('detailName').style.color = '#888'; } else { statArea.innerHTML = '<span class="stat-badge">STATUS: ALIVE</span>'; document.getElementById('detailName').style.color = '#fff'; } document.getElementById('charDetailView').classList.add('open'); }
+        function loadFaction(fid) { 
+            document.querySelectorAll('.faction-card').forEach(c => c.classList.remove('active-faction')); 
+            document.getElementById('fac-'+fid).classList.add('active-faction'); 
+            document.getElementById('factionGrid').classList.add('minimized'); 
+            const listContent = document.getElementById('charListContent'); 
+            listContent.innerHTML = ''; 
+            factions[fid].forEach((char, idx) => { 
+                const div = document.createElement('div'); 
+                div.className = `small-char-card ${char.status === 'dead' ? 'deceased' : ''}`; 
+                div.id = `small-card-${idx}`; 
+                div.onclick = () => showDetail(fid, idx); 
+                 
+                const bgStyle = char.imgSmall ? `background-image: url('${char.imgSmall}'); background-size: cover; background-position: center;` : '';
+                const imgContent = char.imgSmall ? '' : 'IMG';
+
+                div.innerHTML = `
+                    <div class="small-char-img-area" style="${bgStyle}">${imgContent}</div>
+                    <div class="small-char-name">${char.name}</div>
+                `; 
+                listContent.appendChild(div); 
+            }); 
+            document.getElementById('charListWrapper').classList.add('open'); 
+            document.getElementById('charDetailView').classList.remove('open'); 
+            currentFaction = fid; 
+        }
+        function showDetail(fid, idx) { 
+            document.querySelectorAll('.small-char-card').forEach(c => c.classList.remove('selected')); 
+            document.getElementById(`small-card-${idx}`).classList.add('selected'); 
+            const data = factions[fid][idx]; 
+            document.getElementById('detailName').innerText = data.name; 
+            document.getElementById('detailRole').innerText = data.role; 
+            document.getElementById('detailDesc').innerText = data.desc; 
+             
+            const imgBox = document.getElementById('detailImg');
+            if(data.imgDetail) {
+                imgBox.style.backgroundImage = `url('${data.imgDetail}')`;
+                imgBox.style.backgroundSize = 'cover';
+                imgBox.style.backgroundPosition = 'center';
+                imgBox.innerText = '';
+            } else {
+                imgBox.style.backgroundImage = 'none';
+                imgBox.innerText = 'IMG AREA';
+            }
+
+            const statArea = document.getElementById('detailStatArea'); 
+            if(data.status === 'dead') { 
+                statArea.innerHTML = '<span class="stat-badge dead">STATUS: DECEASED</span>'; 
+                document.getElementById('detailName').style.color = '#888'; 
+            } else { 
+                statArea.innerHTML = '<span class="stat-badge">STATUS: ALIVE</span>'; 
+                document.getElementById('detailName').style.color = '#fff'; 
+            } 
+            document.getElementById('charDetailView').classList.add('open'); 
+        }
 
         const dbContent = { "지구공학 프로젝트": `PROJECT: GAIA (INITIATIVE 2034)\nCLASSIFICATION: TOP SECRET // DECLASSIFIED 2041\n\n[OVERVIEW]\n2034년, 제네바 기후 협약의 일환으로 승인된 '가이아 프로젝트'는 대기권에 특수 나노 입자를 살포하여 태양열을 물리적으로 차단, 지구 온난화를 역전시키기 위한 최후의 수단이었다. \n\n[FAILURE ANALYSIS]\n살포된 입자는 예상치 못한 화학 반응을 일으켜 오존층을 파괴하고, 동시에 지표면의 열 반사율(Albedo)을 기형적으로 높였다. 이로 인해 영구동토층이 급격히 융해되었으며, 그 과정에서 봉인되어 있던 고대 바이러스군이 대기로 유출되었다. 현재 지구 기온은 산업화 이전 대비 -40℃ 이하로 급감했다.`, "미지의 바이러스": `CODE NAME: PALE-X\nORIGIN: SIBERIAN PERMAFROST\nTRANSMISSION: AIRBORNE / FLUID CONTACT\n\n[PATHOLOGY]\n시베리아 영구동토층에서 발견된 이 고대 병원체는 현대 의학으로 분석 불가능한 단백질 구조를 가지고 있다. 감염 후 24시간의 잠복기를 거치며, 숙주의 뇌세포를 파괴하고 공격성을 극대화하는 신경 조작 능력을 보인다. \n\n[CURRENT STATUS]\n치료제 개발은 전무하며, 기존의 항바이러스제는 효과가 없다. 감염된 개체는 추위에 대한 내성이 비약적으로 상승하며, 신체 구조가 변이되어 '괴물'이라 불리는 형태로 진화한다.`, "세계 정부 붕괴": `STATUS: GLOBAL ANARCHY\nDATE: 2035. 12. 25 (BLACK CHRISTMAS)\n\n[SEQUENCE OF EVENTS]\n바이러스의 창궐과 극한의 추위로 인해 주요 통신망이 마비되었다. 각국 지도부는 벙커로 대피했으나, 군 지휘 통제 시스템(C4I)의 붕괴로 인해 사실상 모든 행정력이 상실되었다. \n\n[CURRENT STATE]\n국경의 의미는 사라졌으며, 도시는 약탈과 무질서의 장이 되었다. 소수의 군벌, 종교 집단, 그리고 생존자 커뮤니티만이 각자의 법으로 통치되는 점조직 형태로 남아있다.`, "화이트 아웃": `METEOROLOGICAL PHENOMENON: WHITE OUT\nVISIBILITY: ZERO\nDANGER LEVEL: CRITICAL\n\n[DESCRIPTION]\n대기의 불안정으로 인해 발생하는 초대형 눈보라. 시속 100km 이상의 강풍과 함께 엄청난 양의 눈이 쏟아져, 시야를 완전히 차단한다. 지형지물을 식별할 수 없게 되어 방향 감각을 상실하게 만든다.\n\n[SURVIVAL PROTOCOL]\n화이트 아웃 발생 시 즉시 실내로 대피해야 한다. 야외에 고립될 경우 체감 온도는 영하 70도까지 떨어지며, 10분 이내에 저체온증으로 사망할 확률이 99%에 달한다.`, "움직이는 시체": `ENTITY: WALKER\nTYPE: REANIMATED INFECTED\n\n[BIOLOGY]\n바이러스에 의해 사망한 후, 뇌간의 원초적 기능만이 재가동된 상태. 심장은 뛰지 않으며 혈액은 응고되었으나, 근육은 바이러스의 자극으로 인해 계속해서 수축과 이완을 반복한다. 통각을 느끼지 못하며, 신체 부위가 절단되어도 뇌가 파괴되기 전까지는 활동을 멈추지 않는다.\n\n[THREAT]\n개체의 이동 속도는 느리지만, 청각과 후각이 극도로 발달해 있다. 산 사람의 냄새를 맡으면 무리를 지어 끝까지 추적하는 집요함을 보인다.`, "러너": `VARIANT TYPE-A: RUNNER\nTHREAT LEVEL: HIGH\n\n[MUTATION DATA]\n초기 감염 단계에서 신체 대사량이 폭발적으로 증가한 변이체. 근섬유가 비정상적으로 강화되어 있으며, 뼈의 밀도가 높아져 골절이 잘 일어나지 않는다. \n\n[COMBAT INTEL]\n인간보다 빠른 속도(최대 시속 40km)로 질주할 수 있다. 장애물을 넘거나 벽을 타는 등 높은 기동성을 보여주며, 사냥감을 발견하면 괴성을 질러 주변의 다른 감염체들을 불러모으는 습성이 있다.`, "스펏": `VARIANT TYPE-B: SPITTER\nTHREAT LEVEL: HIGH (RANGED)\n\n[MUTATION DATA]\n위장과 식도 부위가 거대하게 부풀어 오른 변이체. 내부에는 바이러스와 위산이 섞인 고농도의 부식성 독액이 생성된다. \n\n[COMBAT INTEL]\n최대 15m 거리에서 독액을 분사한다. 이 액체에 닿으면 피부가 즉시 괴사할 뿐만 아니라, 급속 냉동 효과를 일으켜 피격 부위를 얼어붙게 만든다. 원거리에서 우선적으로 제거해야 할 대상이다.`, "도거": `VARIANT TYPE-C: DOGGER\nORIGIN: CANINE (DOG/WOLF)\n\n[MUTATION DATA]\n바이러스에 감염된 개과 동물들. 털이 빠지고 근육이 외부로 노출되어 있으며, 턱관절이 기형적으로 발달해 악력이 강화되었다. \n\n[HUNTING PATTERN]\n무리(Pack)를 지어 사냥하는 습성이 남아있다. 우두머리 개체의 통솔 하에 사냥감을 포위하고 협공한다. 작고 빠르기 때문에 조준 사격이 어려우며, 특히 야간에 기습적으로 공격해오는 경우가 많다.`, "봄버": `VARIANT TYPE-D: BOMBER\nSIZE: 3 METERS (APPROX.)\nABILITY: VOLATILE EXPLOSION\n\n[MUTATION DATA]\n복부에 가연성 가스와 독성 체액이 가득 찬 거대 변이체. 피부가 팽창하여 매우 얇아진 상태로, 작은 충격에도 쉽게 파열된다. \n\n[DANGER]\n생존자를 감지하면 자살 돌격하여 자폭한다. 폭발 반경 10m 내의 모든 생명체에게 치명상을 입히며, 폭발 후에는 주변에 독성 가스를 살포하여 2차 피해를 유발한다.`, "설인": `VARIANT TYPE-OMEGA: YETI\nSTATUS: APEX PREDATOR (BOSS)\n\n[OBSERVATION LOG]\n키 5m 이상의 거구. 온몸이 하얀 털과 얼음 갑옷으로 뒤덮여 있어 일반적인 화기로는 피해를 주기 어렵다. 초재생 능력을 보유하고 있어 부상을 입어도 순식간에 회복한다.\n\n[ADVISORY]\n자신의 영역을 설정하고 그 안에서만 활동한다. 영역 밖으로 도주하면 추격을 멈추는 경향이 있다. 현재 인류의 화력으로는 사살이 불가능에 가까우므로, 조우 시 교전을 피하고 즉시 이탈할 것을 강력히 권고한다.` };
         const newsPages = [
