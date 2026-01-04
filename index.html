@@ -190,10 +190,21 @@
         .faction-grid.minimized { transform: scale(0.95); opacity: 0.4; }
         .faction-card { background: #111; border: 1px solid #333; height: 400px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 10px); }
         .faction-card:hover { border-color: var(--ice-blue); box-shadow: 0 0 25px rgba(165,243,252,0.15); transform: translateY(-5px); }
+        
+        /* [수정] 방랑자(Unaffiliated) 카드 배경 이미지 및 그라데이션 오버레이 추가 */
+        #fac-none {
+            background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%), url('Gemini_Generated_Image_bq2j6ebq2j6ebq2j.png') no-repeat center center/cover;
+        }
+
         .faction-card::before { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, transparent, rgba(165, 243, 252, 0.2)); transition: top 0.5s; pointer-events: none; }
         .faction-card:hover::before { top: 100%; }
         .faction-card.active-faction { border-color: var(--accent-red); background: linear-gradient(to bottom, #1a0505, #000); opacity: 1 !important; transform: scale(1.02); z-index: 5; }
-        .faction-overlay { background: linear-gradient(to top, rgba(0,0,0,1), transparent); padding: 25px; width: 100%; box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.1); }
+        /* 활성화된 방랑자 카드는 배경 이미지 유지 */
+        #fac-none.active-faction {
+             background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(26, 5, 5, 0.8) 60%, rgba(26, 5, 5, 0.4) 100%), url('Gemini_Generated_Image_bq2j6ebq2j6ebq2j.jpg') no-repeat center center/cover !important;
+        }
+
+        .faction-overlay { background: transparent; padding: 25px; width: 100%; box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 2; }
         .faction-name { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
         .faction-desc { font-size: 0.9rem; color: #aaa; line-height: 1.5; height: 60px; overflow: hidden; }
         .char-list-wrapper { height: 0; overflow: hidden; opacity: 0; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); background: #0a0a0a; border-top: 1px solid #333; border-bottom: 1px solid #333; background-image: linear-gradient(rgba(50, 255, 50, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 255, 50, 0.03) 1px, transparent 1px); background-size: 50px 50px; position: relative; z-index: 2; }
@@ -275,19 +286,99 @@
         .db-val { color: #ccc; white-space: pre-line; text-align: justify; }
         .empty-state { text-align: center; color: #555; margin-top: 100px; }
 
-        /* 6. 플레이 링크 */
-        #play-link { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
-        .play-container { display: flex; justify-content: center; gap: 40px; width: 100%; z-index: 2; }
-        .play-card { width: 350px; height: 450px; background: #111; border-radius: 30px; border: 2px solid #333; text-decoration: none; display: flex; flex-direction: column; justify-content: flex-end; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .play-card:hover { transform: translateY(-10px) scale(1.02); border-color: var(--ice-blue); box-shadow: 0 0 40px rgba(165, 243, 252, 0.2); }
-        #card-original { background: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('5098be83-77cd-485a-b13d-1646b9726999.jpg') no-repeat center center/cover; }
-        #card-original:hover { border-color: var(--accent-red); box-shadow: 0 0 40px rgba(187, 0, 0, 0.3); }
-        #card-remake { background: linear-gradient(to top, #000, #1a1a1a); }
-        .play-info { padding: 30px; text-align: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); width: 100%; box-sizing: border-box; }
-        .play-title { font-size: 1.8rem; font-weight: bold; color: #fff; display: block; margin-bottom: 5px; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
-        .play-ver { font-size: 1rem; font-weight: bold; letter-spacing: 2px; }
-        #card-remake .play-ver { color: #ff3333; animation: blink 1.5s infinite; }
-        #card-original .play-ver { color: #33ff33; }
+       /* 6. 플레이 링크 */
+#play-link {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.play-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    z-index: 2;
+}
+
+.play-card {
+    width: 350px;
+    height: 450px;
+    background: #111;
+    border-radius: 30px;
+    border: 2px solid #333;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* 기본 호버 효과 */
+.play-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--ice-blue);
+    box-shadow: 0 0 40px rgba(165, 243, 252, 0.2);
+}
+
+/* === ORIGINAL 카드 (SAFE) === */
+#card-original {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent), url('5098be83-77cd-485a-b13d-1646b9726999.jpg') no-repeat center center/cover;
+}
+
+#card-original:hover {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 40px rgba(187, 0, 0, 0.3);
+}
+
+/* === REMAKE 카드 (UNSAFE) - [이미지 적용됨] === */
+#card-remake {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent), url('ad8dfdaa-f4a6-4b1f-87c7-cc2fda1a2f8a.png') no-repeat center center/cover;
+}
+
+#card-remake:hover {
+    border-color: #ff3333;
+    box-shadow: 0 0 40px rgba(255, 51, 51, 0.3);
+}
+
+/* 카드 하단 텍스트 영역 */
+.play-info {
+    padding: 30px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.play-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.play-ver {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* 버전별 텍스트 색상 */
+#card-remake .play-ver {
+    color: #ff3333;
+    animation: blink 1.5s infinite;
+}
+
+#card-original .play-ver {
+    color: #33ff33;
+}
 
         /* 7. 푸터 */
         .footer-section { min-height: 30vh; background: #000; border-top: 1px solid #222; text-align: center; display: flex; justify-content: center; align-items: center; padding: 50px 0; }
@@ -465,7 +556,7 @@
                 </div>
 
                 <div class="faction-card" id="fac-bunker" onclick="loadFaction('bunker')"><div class="faction-overlay"><div class="faction-name">The Bunker</div><div class="faction-desc">작은 지하 방공호.<br>깊은 곳에 묻힌 위태로운 희망.</div></div></div>
-                <div class="faction-card" id="fac-union" onclick="loadFaction('union')"><div class="faction-overlay"><div class="faction-name">Hoehyeon Union</div><div class="faction-desc">회현역을 지배하는 네임드 중형 세력.<br>철저한 신분 등급제 운영.</div></div></div>
+                <div class="faction-card" id="fac-union" onclick="loadFaction('union')"><div class="faction-overlay"><div class="faction-name">Hoehyeon Union</div><div class="faction-desc">회현역을 지배하는 중형 세력.<br>철저한 신분 등급제 운영.</div></div></div>
                 <div class="faction-card" id="fac-mrc" onclick="loadFaction('mrc')"><div class="faction-overlay"><div class="faction-name">MRC Corp.</div><div class="faction-desc">전 정부 소속 연구진과 군인들의 대형 세력.<br>괴물 통제 연구 및 한국 재건 목표.</div></div></div>
                 <div class="faction-card" id="fac-none" onclick="loadFaction('none')"><div class="faction-overlay"><div class="faction-name">Unaffiliated</div><div class="faction-desc">소속 없이 얼어붙은 황무지를 떠도는<br>생존자들.</div></div></div>
             </div>
@@ -616,15 +707,15 @@
             slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active'); });
             slider.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
         };
-         
+          
         function startSnowEffect() { const c = document.getElementById('snow-canvas'); const ctx = c.getContext('2d'); const main = document.getElementById('main'); let w = main.clientWidth, h = main.clientHeight; c.width=w; c.height=h; const p = Array.from({length:150},()=>({x:Math.random()*w, y:Math.random()*h, r:Math.random()*2+1, v:Math.random()*1.5+0.5})); function draw(){ ctx.clearRect(0,0,w,h); ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.beginPath(); p.forEach(i=>{ ctx.moveTo(i.x,i.y); ctx.arc(i.x,i.y,i.r,0,Math.PI*2); i.x+=i.v; i.y+=i.v*0.8; if(i.x>w)i.x=-10; if(i.y>h)i.y=-10; }); ctx.fill(); requestAnimationFrame(draw); } draw(); window.addEventListener('resize', ()=>{ w=main.clientWidth; h=main.clientHeight; c.width=w; c.height=h; }); }
           
         const mapData = { 
-            'A': { title: 'HOEHYEON STN.', temp: '-12℃', risk: 'MEDIUM', desc: '유니온(Union)의 본거지.<br>철저한 통제가 이루어지는 지하 요새.', img: 'image_2.png' }, 
+            'A': { title: 'DONGDAEMUN STATION', temp: '-15℃', risk: 'MEDIUM', desc: '무너진 교통의 요지.<br>수많은 감염체들이 배회하는 위험 지역.', img: 'image_0.png' }, 
             'B': { title: 'SECRET BUNKER', temp: '5℃', risk: 'SAFE', desc: '남산 어딘가에 숨겨진 비밀 벙커.<br>현재 생존자들의 안전 가옥.', img: 'image_3.png' }, 
             'C': { title: 'MRC LAB HQ', temp: '-20℃', risk: 'EXTREME', desc: '구 정부 청사를 개조한 MRC의 본부.<br>접근 시 발포함.', img: 'image_4.png' }, 
-            'D': { title: 'SEOUL STATION', temp: '-15℃', risk: 'HIGH', desc: '무너진 교통의 요지.<br>수많은 감염체들이 배회하는 위험 지역.', img: 'image_0.png' }, 
-            'E': { title: 'YEOUIDO HOSPITAL', temp: '-18℃', risk: 'MEDIUM', desc: '반쯤 무너진 종합 병원.<br>의약품이 남아있을 가능성이 있다.', img: 'image_5.png' }, 
+            'D': { title: 'HOEHYEON STN.', temp: '-12℃', risk: 'HIGH', desc: '유니온(Union)의 본거지.<br>철저한 통제가 이루어지는 지하 요새.', img: 'image_2.png' }, 
+            'E': { title: 'DEUNGCHON HOSPITAL', temp: '-18℃', risk: 'MEDIUM', desc: '반쯤 무너진 종합 병원.<br>의약품이 남아있을 가능성이 있다.', img: 'image_5.png' }, 
             'F': { title: 'FROZEN HAN-RIVER', temp: '-35℃', risk: 'HIGH', desc: '얼어붙은 거대한 강.<br>빙판 아래 무엇이 있는지 알 수 없다.', img: 'image_1.png' } 
         };
         
@@ -653,24 +744,24 @@
 
         const factions = {
             'bunker': [ 
-                { name: 'Jung-woo Ji', role: 'Leader', age: '28', sex: 'MALE', desc: '지하 방공호의 리더.\n특유의 카리스마로 그룹을 이끌고 있다.', imgSmall: 'd89a94f0-1fcb-420a-8186-b45860b4fcb0.png', imgDetail: '8351d124-e0b4-4e2c-9757-33f157003e29.png'  }, 
+                { name: 'Jung-woo Ji', role: 'Leader', age: '28', sex: 'MALE', desc: '지하 방공호의 리더.\n특유의 카리스마로 그룹을 이끌고 있다.', imgSmall: 'd89a94f0-1fcb-420a-8186-b45860b4fcb0.png', imgDetail: '8351d124-e0b4-4e2c-9757-33f157003e29.png' }, 
                 { name: 'Seol-ah Yoo', role: 'Survivor', age: '22', sex: 'FEMALE', desc: '혹독한 환경에 빠르게 적응한 생존자.\n판단력이 빠르고 민첩하다.', imgSmall: '8959fc82-51ff-40ad-b798-f79d16daaafb.png', imgDetail: 'c55dd033-8d69-456f-b885-e4d563a45842.jpg' }, 
                 { name: 'Ji-yu Ha', role: 'Teenager', age: '15', sex: 'FEMALE', desc: '그룹의 막내. 희망을 잃지 않으려 노력한다.\nMRC 소속 하지철의 여동생.', imgSmall: '620a8a91-af82-4797-af42-9366910fca44.png', imgDetail: 'f4e34fe0-a4a7-4c1a-bbd7-80da6fd0ce3d.png' }, 
                 { name: 'Min-woo Kim', role: 'DECEASED', age: '[[ REDACTED ]]', sex: 'MALE', desc: '[[ DATA EXPUNGED ]]\n\n기록이 말소된 데이터입니다.', status: 'dead', corrupted: true } 
             ],
             'union': [ 
-                { name: 'Hwa-yeon Kang', role: 'Representative', age: '28', sex: 'FEMALE', desc: '회현역 연합의 대표.\n냉철하고 계산적인 성격으로 조직을 운영한다.' }, 
-                { name: 'Hwa-jin Kang', role: 'Vice Rep.', age: '26', sex: 'MALE', desc: '강화연의 남동생이자 부대표.\n엄격한 신분제 규칙을 집행하는 관리자.' }, 
-                { name: 'Jin-ah Lee', role: 'Lower Class', age: '20', sex: 'FEMALE', desc: '미등록 하급 계급 거주자.\n하루하루 힘겹게 생존을 이어가고 있다.' } 
+                { name: 'Hwa-yeon Kang', role: 'Representative', age: '28', sex: 'FEMALE', desc: '회현역 연합의 대표.\n냉철하고 계산적인 성격으로 조직을 운영한다.', imgSmall: 'fa62c23f-d9b2-4887-8dc5-83fff791e1c2.png', imgDetail: '08c370a1-84fe-484f-9870-6a386c41e1ee.png' }, 
+                { name: 'Hwa-jin Kang', role: 'Vice Rep.', age: '26', sex: 'MALE', desc: '강화연의 남동생이자 부대표.\n엄격한 신분제 규칙을 집행하는 관리자.', imgSmall: '86df1f11-cf05-45cc-b1c3-ab78d1284b9d.png', imgDetail: 'dc97abb5-e662-4cc8-b7df-5916f2f9082f.png' }, 
+                { name: 'Jin-ah Lee', role: 'Lower Class', age: '20', sex: 'FEMALE', desc: '미등록 하급 계급 거주자.\n하루하루 힘겹게 생존을 이어가고 있다.', imgSmall: '3127ffa6-ff6c-4e2d-849a-6e40e03da91a.png', imgDetail: '4ea4903c-5bbe-426d-998e-35e4627b12d5.png' } 
             ],
             'mrc': [ 
-                { name: 'Min-ho Kang', role: 'Chief Commander', age: '45', sex: 'MALE', desc: 'MRC의 군사장이자 총책임자.\n한국 재건을 위해서라면 수단과 방법을 가리지 않는다.' }, 
-                { name: 'Ji-cheol Ha', role: 'Subject / Soldier', age: '23', sex: 'MALE', desc: '생체 실험으로 강화된 군인.\n하지유의 친오빠지만 현재는 MRC의 명령만 따른다.' }, 
-                { name: 'Seo-jin Park', role: 'Head Researcher', age: '31', sex: 'FEMALE', desc: 'MRC 연구소장.\n괴물 통제권을 얻기 위해 위험한 실험을 주도한다.' } 
+                { name: 'Min-ho Kang', role: 'Chief Commander', age: '45', sex: 'MALE', desc: 'MRC의 군사장이자 총책임자.\n한국 재건을 위해서라면 수단과 방법을 가리지 않는다.', imgSmall: '907f690e-93c5-4b22-9464-ae569489ccbd.png', imgDetail: '54b6490b-56f2-44fb-87b0-4714a9eb9083.png' }, 
+                { name: 'Ji-cheol Ha', role: 'Subject / Soldier', age: '23', sex: 'MALE', desc: '생체 실험으로 강화된 군인.\n하지유의 친오빠지만 현재는 MRC의 명령만 따른다.', imgSmall: '2f150f2a-6c5f-419f-99e4-f32b0f447eb7.png', imgDetail: 'dea33f5b-848f-42dc-9ed0-18832850654f.png' }, 
+                { name: 'Seo-jin Park', role: 'Head Researcher', age: '31', sex: 'FEMALE', desc: 'MRC 연구소장.\n괴물 통제권을 얻기 위해 위험한 실험을 주도한다.', imgSmall: 'adbc574a-a53f-44d7-ac53-70cffede3c24.png', imgDetail: 'fa94b981-0534-4162-b850-ec0515c0d0be.png' } 
             ],
             'none': [ 
-                { name: 'Man-chun Hwang', role: 'Ex-Spec Forces', age: '72', sex: 'MALE', desc: '전직 특수부대장 출신의 노인.\n얼어붙은 황무지에서 전설적인 생존자로 불린다.' }, 
-                { name: '???', role: 'Unknown', age: '???', sex: '???', desc: '신원 미상.\n목적도 정체도 알 수 없는 방랑자.' },
+                { name: 'Man-chun Hwang', role: 'Ex-Spec Forces', age: '72', sex: 'MALE', desc: '전직 특수부대장 출신의 노인.\n얼어붙은 황무지에서 전설적인 생존자로 불린다.', imgSmall: 'efd102a5-8cd2-49b7-9a14-7857c3510848.png', imgDetail: '7ca609b3-d366-40a1-96bf-f484c85bb537.png' }, 
+                { name: 'Yoon-seo Choi', role: 'Field Medic', age: '31', sex: 'FEMALE', desc: '무너진 병원 출신의 간호사.\n세력 간의 전쟁을 피해 환자를 치료하며 떠돈다.', imgSmall: '02688ebb-9ecd-4312-a9cf-5ad9ab545893.png', imgDetail: '9a24af01-37cb-4191-b563-9480bb3a2ced.png' },
                 { name: '???', role: 'CORRUPTED', age: 'ERR', sex: 'ERR', desc: '[[ SYSTEM FAILURE ]]\n\n데이터 복구 불가능.\n접근 권한이 없습니다.', corrupted: true }
             ]
         };
